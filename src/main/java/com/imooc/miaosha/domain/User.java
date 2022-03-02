@@ -1,0 +1,37 @@
+package com.imooc.miaosha.domain;
+
+/**
+ * @program: miaosha1
+ * @description: 用户测试
+ * @author: XuJY
+ * @create: 2022-02-25 20:13
+ **/
+
+public class User {
+    int id;
+    String name;
+
+    public User() {
+    }
+
+    public User(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+}
