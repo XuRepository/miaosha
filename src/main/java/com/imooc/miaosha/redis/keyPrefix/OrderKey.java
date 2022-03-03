@@ -19,4 +19,6 @@ public class OrderKey extends BasePrefix {
     public static OrderKey getById = new OrderKey("id");
     public static OrderKey getByName = new OrderKey("name");
 
+    public static OrderKey getMiaoshaOrderByUidGid = new OrderKey("moug");
+
 }

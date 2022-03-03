@@ -27,11 +27,14 @@ public class MiaoshaService {
 
 
         //1减库存
-        goodsService.reduceStock(goods);
+        int res = goodsService.reduceStock(goods);
+        if (res !=0){
+            //2下订单
+            return orderService.createOrder(user, goods);
+        }else{
+            return null;
+        }
 
-
-        //2下订单
-        return orderService.createOrder(user, goods);
     }
 
 }

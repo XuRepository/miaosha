@@ -12,10 +12,15 @@ import com.imooc.miaosha.util.MD5Util;
 import com.imooc.miaosha.util.UUIDUtil;
 import com.imooc.miaosha.vo.GoodsVo;
 import com.imooc.miaosha.vo.LoginVo;
+import groovy.util.logging.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -27,10 +32,12 @@ import java.util.List;
  * @create: 2022-02-27 15:54
  **/
 @Service
+@Slf4j
 public class GoodsService {
 
+    Logger logger = LoggerFactory.getLogger(GoodsService.class);
 
-    @Autowired
+    @Resource
     GoodsDao goodsDao;
 
     @Autowired
@@ -48,9 +55,17 @@ public class GoodsService {
 
     }
 
-    public void reduceStock(GoodsVo goods) {
+    public int reduceStock(GoodsVo goods) {
         MiaoshaGoods g = new MiaoshaGoods();
         g.setGoodsId(goods.getId());
-        goodsDao.reduceStock(g);
+        // 减库存操作依赖数据库去完成，将 "卖超问题" 交给数据库层面的乐观锁去控制
+        int res = goodsDao.reduceStock(g);
+        return res;
+
+
+    }
+
+    public GoodsVo getGoodsVoByGoodsId(long goodsId) {
+        return goodsDao.getGoodsVoByGoodsId(goodsId);
     }
 }

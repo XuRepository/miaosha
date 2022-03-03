@@ -5,6 +5,8 @@ import com.imooc.miaosha.dao.OrderDao;
 import com.imooc.miaosha.domain.MiaoshaOrder;
 import com.imooc.miaosha.domain.MiaoshaUser;
 import com.imooc.miaosha.domain.OrderInfo;
+import com.imooc.miaosha.redis.RedisService;
+import com.imooc.miaosha.redis.keyPrefix.OrderKey;
 import com.imooc.miaosha.vo.GoodsVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
@@ -27,11 +29,19 @@ public class OrderService {
     OrderDao orderDao;
 
 
+    @Autowired
+    RedisService redisService;
 
-    public MiaoshaOrder getMiaoshaOrderByUserIdGoodsId(long usereId, long goodsId) {
 
-        return orderDao.getMiaoshaOrderByUserIdGoodsId(usereId,goodsId);
+    //从redis取唯一的订单进行查询，防止卖超
+    public MiaoshaOrder getMiaoshaOrderByUserIdGoodsId(long userId, long goodsId) {
+
+//        return orderDao.getMiaoshaOrderByUserIdGoodsId(usereId,goodsId);
+        return redisService.get(OrderKey.getMiaoshaOrderByUidGid, "" + userId + "_" + goodsId, MiaoshaOrder.class);
+
     }
+
+
 
     @Transactional//事务，原子操作这个方法
     public OrderInfo createOrder(MiaoshaUser user, GoodsVo goods) {
@@ -58,7 +68,14 @@ public class OrderService {
 
         orderDao.insertMiaoshaOrder(miaoshaOrder);
 
+        //写入redis，防止卖超
+        redisService.set(OrderKey.getMiaoshaOrderByUidGid, "" + user.getId() + "_" + goods.getId(), miaoshaOrder);
+
         return orderInfo;
 
+    }
+
+    public OrderInfo getOrderById(long orderId) {
+        return orderDao.getOrderById(orderId);
     }
 }

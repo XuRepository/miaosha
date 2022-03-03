@@ -3,7 +3,9 @@ package com.imooc.miaosha.controller;
 import com.imooc.miaosha.domain.MiaoshaUser;
 import com.imooc.miaosha.redis.RedisService;
 import com.imooc.miaosha.redis.keyPrefix.GoodsKey;
+import com.imooc.miaosha.result.Result;
 import com.imooc.miaosha.service.GoodsService;
+import com.imooc.miaosha.vo.GoodsDetailVo;
 import com.imooc.miaosha.vo.GoodsVo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,11 +89,44 @@ public class GoodsController {
 
     }
 
+
+    @RequestMapping(value = "/detail/{goodsId}")
+    @ResponseBody
+    public Result<GoodsDetailVo> detail(HttpServletRequest request, HttpServletResponse response, Model model, MiaoshaUser user,
+                                        @PathVariable("goodsId") long goodsId) {
+        GoodsVo goods = goodsService.getGoodsVoByGoodsId(goodsId);
+        long startAt = goods.getStartDate().getTime();
+        long endAt = goods.getEndDate().getTime();
+        long now = System.currentTimeMillis();
+        int miaoshaStatus = 0;
+        int remainSeconds = 0;
+        if (now < startAt) {//秒杀还没开始，倒计时
+            miaoshaStatus = 0;
+            remainSeconds = (int) ((startAt - now) / 1000);
+        } else if (now > endAt) {//秒杀已经结束
+            miaoshaStatus = 2;
+            remainSeconds = -1;
+        } else {//秒杀进行中
+            miaoshaStatus = 1;
+            remainSeconds = 0;
+        }
+        GoodsDetailVo vo = new GoodsDetailVo();
+        vo.setGoods(goods);
+        vo.setUser(user);
+        vo.setRemainSeconds(remainSeconds);
+        vo.setMiaoshaStatus(miaoshaStatus);
+
+//        System.out.println(vo.toString());
+
+        return Result.success(vo);
+    }
+
+
     //页面缓存
     // MiaoShaUser 的参数化注解！！！UserArgumentResolver
-    @RequestMapping(value = "/to_detail/{goodsId}",produces = "text/html")
+    @RequestMapping(value = "/to_detail2/{goodsId}",produces = "text/html")
     @ResponseBody
-    public String to_detail(HttpServletRequest request, HttpServletResponse response,
+    public String to_detail1(HttpServletRequest request, HttpServletResponse response,
                             Model model, MiaoshaUser user,
                             @PathVariable("goodsId")long goodsId) {
 
