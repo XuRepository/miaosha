@@ -1,6 +1,7 @@
 package com.imooc.miaosha.controller;
 
 import com.imooc.miaosha.domain.User;
+import com.imooc.miaosha.rabbitMQ.MQSender;
 import com.imooc.miaosha.redis.RedisService;
 import com.imooc.miaosha.redis.keyPrefix.UserKey;
 import com.imooc.miaosha.result.CodeMsg;
@@ -25,12 +26,24 @@ public class DemoController {
 	@Autowired
 	RedisService redisService;
 
+	@Autowired
+	MQSender sender;
+
 	@RequestMapping("/")
 	@ResponseBody
 	String home() {
 		return "Hello World!";
 	}
 
+//	@RequestMapping("/mq")
+//	@ResponseBody
+//	public Result<String> mq(){
+//
+//		sender.sendFanout("hello,rabbitMQ");
+//
+//		return Result.success("mq success");
+//
+//	}
 
 	//1.rest api json输出 2.页面
 	@RequestMapping("/hello")

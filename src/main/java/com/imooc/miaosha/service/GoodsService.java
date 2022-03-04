@@ -35,7 +35,6 @@ import java.util.List;
 @Slf4j
 public class GoodsService {
 
-    Logger logger = LoggerFactory.getLogger(GoodsService.class);
 
     @Resource
     GoodsDao goodsDao;
@@ -67,5 +66,18 @@ public class GoodsService {
 
     public GoodsVo getGoodsVoByGoodsId(long goodsId) {
         return goodsDao.getGoodsVoByGoodsId(goodsId);
+    }
+
+    /**
+     * 重置
+     * @param goodsList
+     */
+    public void resetStock(List<GoodsVo> goodsList) {
+        for(GoodsVo goods : goodsList ) {
+            MiaoshaGoods g = new MiaoshaGoods();
+            g.setGoodsId(goods.getId());
+            g.setStockCount(goods.getStockCount());
+            goodsDao.resetStock(g);
+        }
     }
 }

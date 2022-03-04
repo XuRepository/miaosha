@@ -58,12 +58,16 @@ public class OrderService {
         orderInfo.setStatus(0);
         orderInfo.setUserId(user.getId());
 
-        long orderId = orderDao.insertOrder(orderInfo);
+        orderDao.insertOrder(orderInfo);
+
+        //先生成完成的orderInfo，他的id是自增的
+        //在生成miaoshaOrder
+        //秒杀orer的OrderId为orderinfo的id
 
         //完善miaoshaOrder信息
         MiaoshaOrder miaoshaOrder = new MiaoshaOrder();
         miaoshaOrder.setGoodsId(goods.getId());
-        miaoshaOrder.setOrderId(orderId);
+        miaoshaOrder.setOrderId(orderInfo.getId());
         miaoshaOrder.setUserId(user.getId());
 
         orderDao.insertMiaoshaOrder(miaoshaOrder);
@@ -77,5 +81,13 @@ public class OrderService {
 
     public OrderInfo getOrderById(long orderId) {
         return orderDao.getOrderById(orderId);
+    }
+
+    /**
+     * 重置
+     */
+    public void deleteOrders() {
+        orderDao.deleteOrders();
+        orderDao.deleteMiaoshaOrders();
     }
 }
