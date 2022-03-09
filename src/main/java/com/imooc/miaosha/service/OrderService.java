@@ -90,4 +90,23 @@ public class OrderService {
         orderDao.deleteOrders();
         orderDao.deleteMiaoshaOrders();
     }
+    /**
+     * 时序图：删除订单
+     */
+    public void deleteOrders1(MiaoshaUser user) {
+        redisService.delete(OrderKey.getMiaoshaOrderByUidGid, "" + user.getId());
+        orderDao.deleteOrders();
+        orderDao.deleteMiaoshaOrders();
+    }
+    /**
+     * 时序图：修改订单
+     */
+    public void updateOrder(MiaoshaUser user,MiaoshaOrder order) {
+        redisService.set(OrderKey.getMiaoshaOrderByUidGid, "" + user.getId(),order);
+        orderDao.updateOrders();
+        orderDao.updateMiaoshaOrders();
+    }
+
+
+
 }

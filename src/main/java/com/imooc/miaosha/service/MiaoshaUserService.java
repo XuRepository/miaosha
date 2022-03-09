@@ -10,6 +10,7 @@ import com.imooc.miaosha.result.Result;
 import com.imooc.miaosha.util.MD5Util;
 import com.imooc.miaosha.util.UUIDUtil;
 import com.imooc.miaosha.vo.LoginVo;
+import com.imooc.miaosha.vo.UserVo;
 import com.sun.org.apache.bcel.internal.classfile.Code;
 import jdk.nashorn.internal.parser.TokenKind;
 import org.apache.commons.lang3.StringUtils;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 
 /**
  * @program: miaosha1
@@ -131,5 +133,45 @@ public class MiaoshaUserService {
             addCookie(response, token, user);
         }
         return user;
+    }
+
+    /**\
+     * 时序图：插入
+     * @param userVo
+     * @return
+     */
+    public int insert(UserVo userVo){
+        MiaoshaUser miaoshaUser = new MiaoshaUser();
+        miaoshaUser.setId(userVo.getId());
+        miaoshaUser.setNickname(userVo.getNickname());
+        miaoshaUser.setPassword(MD5Util.inputPassToDbPass(userVo.getPassword(),"1a2b3c4d"));
+
+        miaoshaUser.setSalt("1a2b3c4d");
+        miaoshaUser.setLoginCount(0);
+        miaoshaUser.setLastLoginDate(new Date());
+        miaoshaUser.setRegisterDate(new Date());
+        return miaoshaUserDao.insert(miaoshaUser);
+    }
+
+    //时序图方法
+    public MiaoshaUser getById_1(long id){
+
+        return miaoshaUserDao.getById(id);
+
+    }
+    //时序图方法
+    public int update(UserVo userVo){
+
+        MiaoshaUser miaoshaUser = new MiaoshaUser();
+        miaoshaUser.setId(userVo.getId());
+        miaoshaUser.setNickname(userVo.getNickname());
+        miaoshaUser.setPassword(MD5Util.inputPassToDbPass(userVo.getPassword(),"1a2b3c4d"));
+
+        miaoshaUser.setSalt("1a2b3c4d");
+        miaoshaUser.setLoginCount(0);
+        miaoshaUser.setLastLoginDate(new Date());
+        miaoshaUser.setRegisterDate(new Date());
+        return miaoshaUserDao.update(miaoshaUser);
+
     }
 }

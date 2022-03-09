@@ -39,4 +39,10 @@ public interface OrderDao {
 
     @Delete("delete from miaosha_order")
     void deleteMiaoshaOrders();
+
+    //时序图
+    void updateOrders();
+
+    //时序图
+    void updateMiaoshaOrders();
 }

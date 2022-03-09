@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+</head>
+<script>
+    function login() {
+        var nickname = $('#nicknaemInput').val();
+        var password = $('#passwordInput').val();
+        var id = $('#idInput').val();
+        console.log('login name is ' + username)
+        console.log('login password is ' + password)
+
+        $.ajax({
+            type: "POST",
+            url: "/login/register",
+            dataType: "json",
+            data: {
+                nickname: nickname,
+                password: password,
+                id: id,
+            },
+            success: function (data) {
+                alert("注册成功");
+                alert(data.status);
+            },
+            error: function (jqXHR) {
+                alert("发生错误：" + jqXHR.status);
+            }
+        });
+    }
+</script>
+<body>
+username:<input id="nicknameInput">
+password:<input id="passwordInput">
+id:<input id="idInput">
+<button onclick="login()">注册</button>
+</body>
+
+</body>
+</html>

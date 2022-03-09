@@ -21,4 +21,5 @@ public interface UserDao {
     @Insert("insert into user(id,name) values(#{id},#{name})")
     public int insert(User user);
 
+
 }
