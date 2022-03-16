@@ -45,10 +45,18 @@ public class GoodsController {
     @Autowired
     ApplicationContext applicationContext;
 
+    @RequestMapping(value="/to_list")
+    public String list(Model model,MiaoshaUser user) {
+        model.addAttribute("user", user);
+        List<GoodsVo> goodsList = goodsService.listGoodsVo();
+        model.addAttribute("goodsList", goodsList);
+        return "shop";
+    }
+
 
     //页面缓存
     // MiaoShaUser 的参数化注解！！！UserArgumentResolver
-    @RequestMapping(value = "/to_list",produces = "text/html")//加上produces，发送给前端指定的类型，在这里返回的是一个html页面,需要和responseBody一起使用
+    @RequestMapping(value = "/to_list1",produces = "text/html")//加上produces，发送给前端指定的类型，在这里返回的是一个html页面,需要和responseBody一起使用
     @ResponseBody//不加@ResponseBody注解相当于按照和返回String同名jsp页面解析自然就会报错
     public String list(HttpServletRequest request, HttpServletResponse response,Model model, MiaoshaUser user
 //                       @CookieValue(value = MiaoshaUserService.COOKIE_NAME_TOKEN,required = false) String cookieToken,
