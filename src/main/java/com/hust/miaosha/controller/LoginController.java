@@ -32,11 +32,6 @@ public class LoginController {
 		return "login";
 	}
 
-	@RequestMapping("/to_index")
-	public String index() {
-		return "index";
-	}
-
 	@RequestMapping("/do_login")
 	@ResponseBody
 	public Result<String> doLogin(HttpServletResponse response, @Valid LoginVo loginVo) {//@valid  参数校验
@@ -58,11 +53,6 @@ public class LoginController {
 		int res = miaoshaUserService.insert(userVo);
 		if (res == 1) return Result.success("插入成功");
 		else return Result.error(CodeMsg.SERVER_ERROR);
-	}
-
-	@RequestMapping("/to_shop")
-	public String toList() {
-		return "shop";
 	}
 
 

@@ -15,7 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.thymeleaf.spring4.context.SpringWebContext;
+import org.thymeleaf.context.IWebContext;
+import org.thymeleaf.context.WebContext;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,18 +46,10 @@ public class GoodsController {
     @Autowired
     ApplicationContext applicationContext;
 
-    @RequestMapping(value="/to_list")
-    public String list(Model model,MiaoshaUser user) {
-        model.addAttribute("user", user);
-        List<GoodsVo> goodsList = goodsService.listGoodsVo();
-        model.addAttribute("goodsList", goodsList);
-        return "shop";
-    }
-
 
     //页面缓存
     // MiaoShaUser 的参数化注解！！！UserArgumentResolver
-    @RequestMapping(value = "/to_list1",produces = "text/html")//加上produces，发送给前端指定的类型，在这里返回的是一个html页面,需要和responseBody一起使用
+    @RequestMapping(value = "/to_list",produces = "text/html")//加上produces，发送给前端指定的类型，在这里返回的是一个html页面,需要和responseBody一起使用
     @ResponseBody//不加@ResponseBody注解相当于按照和返回String同名jsp页面解析自然就会报错
     public String list(HttpServletRequest request, HttpServletResponse response,Model model, MiaoshaUser user
 //                       @CookieValue(value = MiaoshaUserService.COOKIE_NAME_TOKEN,required = false) String cookieToken,
@@ -85,10 +78,10 @@ public class GoodsController {
         model.addAttribute("goodsList",list);
 
         //手动渲染，springboot-thymleaf，查文档可有看出
-        SpringWebContext ctx = new SpringWebContext(request, response,
-                request.getServletContext(), request.getLocale(), model.asMap(), applicationContext);
+        IWebContext ctx = new WebContext(request, response,
+                request.getServletContext(), request.getLocale(), model.asMap());
         //手动渲染
-        html = thymeleafViewResolver.getTemplateEngine().process("goods_list", ctx);
+        html = thymeleafViewResolver.getTemplateEngine().process("shop_list", ctx);
         if (!StringUtils.isEmpty(html)) {
             redisService.set(GoodsKey.getGoodsList, "", html);//渲染好的纯html页面加入缓存
         }
@@ -172,10 +165,10 @@ public class GoodsController {
         model.addAttribute("remainSeconds", remainSeconds);
 
         //手动渲染，springboot-thymleaf，查文档可有看出
-        SpringWebContext ctx = new SpringWebContext(request, response,
-                request.getServletContext(), request.getLocale(), model.asMap(), applicationContext);
+        IWebContext ctx = new WebContext(request, response,
+                request.getServletContext(), request.getLocale(), model.asMap());
         //手动渲染
-        html = thymeleafViewResolver.getTemplateEngine().process("goods_detail", ctx);
+        html = thymeleafViewResolver.getTemplateEngine().process("single-product2", ctx);
         if (!StringUtils.isEmpty(html)) {
             redisService.set(GoodsKey.getGoodsDetail, ""+goodsId, html);//渲染好的纯html页面加入缓存
         }

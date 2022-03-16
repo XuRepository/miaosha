@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="shortcut icon" th:href="@{/images/favicon.png}" type="image/x-icon">
+
+	<title>Shop</title>
+
+	<!-- Fonts -->
+	<link rel="stylesheet" th:href="@{/assets/fonts/Lato/Lato.css}">
+
+	<!-- Icons -->
+	<link rel="stylesheet" th:href="@{/assets/fonts/flaticon/flaticon.css}">
+	<link rel="stylesheet" th:href="@{/assets/fonts/webfont/css/materialdesignicons.min.css}">
+
+	<!-- Libs -->
+	<link rel="stylesheet" th:href="@{/libs/bootstrap-4.3.1/css/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/libs/select2/css/select2.min.css}">
+	<link rel="stylesheet" th:href="@{/libs/slick/slick.css}">
+
+	<!-- Theme -->
+	<link rel="stylesheet" th:href="@{/assets/css/style.css}">
+	<meta name="theme-color" content="#ECECEC">
+
+
+	<!-- Libs -->
+	<script th:src="@{/libs/jquery-2.2.3.min.js}"></script>
+	<script th:src="@{/libs/bootstrap-4.3.1/js/bootstrap.min.js}"></script>
+	<script th:src="@{/libs/select2/js/select2.min.js}"></script>
+	<script th:src="@{/libs/slick/slick.min.js}"></script>
+
+	<!-- Theme -->
+	<script th:src="@{/assets/js/custom.js}"></script>
+
+	<!-- jquery -->
+	<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+	<!-- bootstrap -->
+	<link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap.min.css}" >
+	<script type="text/javascript" th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+	<!-- jquery-validator -->
+	<script type="text/javascript" th:src="@{/jquery-validation/jquery.validate.min.js}"></script>
+	<script type="text/javascript" th:src="@{/jquery-validation/localization/messages_zh.min.js}"></script>
+	<!-- layer -->
+	<script type="text/javascript" th:src="@{/layer/layer.js}"></script>
+	<!-- md5.js -->
+	<script type="text/javascript" th:src="@{/js/md5.min.js}"></script>
+	<!-- common.js -->
+	<script type="text/javascript" th:src="@{/js/common.js}"></script>
+
+</head>
+<body>
+<!--	<div class="head-line"></div>-->
+
+	<header class="page-header" style="background-image: url(/img/topbg.jpg); background-size: 100% 100%; ">
+		<div class="container">
+			<div class="top-bar row align-items-center">
+				<div class="search col-lg-2">
+					<div class="form-search-toggle js-open-search">
+						<i class="search-icon flaticon-magnifying-glass-browser fi-2x"></i>
+						<span>搜索</span>
+					</div>
+					<div id="js-open-mob-menu" class="mob-menu-toggle">
+						<span>Menu</span> <i class="flaticon-menu-options fi-2x"></i>
+					</div>
+				</div>
+				
+				<div class="logo col-lg-4 col-xl-6">
+			        <a href="#"><img th:src="@{/images/logo3.png}" alt=""></a>
+				</div>
+
+				<div class="quick-access-menu col-lg-2 col-xl-4">
+<!--					<div class="quick-access__item">-->
+<!--						<div class="select-currency">-->
+<!--							<select class="select-style js-select2">-->
+<!--					      		<option value="usd">中文</option>-->
+<!--					      		<option value="eur">英语</option>-->
+<!--					      		<option value="gbr">日语</option>-->
+<!--					      	</select>-->
+<!--						</div>   -->
+<!--					</div>-->
+					<div >
+						<a href="http://localhost:8080/login/to_login"><i class="flaticon-messenger-user-avatar fi-2x">登录</i></a>
+					</div>
+				</div><!-- end of quick-access-menu -->
+			</div> <!-- end of top-bar -->
+
+			<nav class="header-navigation">
+				<button class="mob-menu-close" id="js-close-mob-menu">
+					<span>Close</span>
+					<i class="flaticon-cancel-button"></i>
+				</button>
+
+				<ul class="nav justify-content-center">
+					<li class="nav-item">
+						<a class="nav-link" th:href="@{/index.html}">主页&nbsp;</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" th:href="@{/shop.html}">秒杀</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" th:href="@{/contact.html}">联系我们&nbsp;</a>
+					</li>
+				</ul>
+			</nav>
+		</div> <!-- end of container -->
+
+		<div class="shop-categories-nav">
+			<div class="container">
+				<ul class="nav justify-content-between">
+					<li class="nav-item"><a href="/shop.html" class="nav-link active">全部&nbsp;</a></li>
+					<li class="nav-item"><a href="/shop.html" class="nav-link">纪念品</a></li>
+					<li class="nav-item"><a href="/shop.html" class="nav-link">电子产品</a></li>
+					<li class="nav-item"><a href="/shop.html" class="nav-link">生活用品</a></li>
+					<li class="nav-item"><a href="/shop.html" class="nav-link">美食</a></li>
+					<li class="nav-item"><a href="/shop.html" class="nav-link">衣服</a></li>
+					<li class="nav-item"><a href="/shop.html" class="nav-link">鞋子</a></li>
+					<li class="nav-item"><a href="/shop.html" class="nav-link">美妆</a></li>
+					<li class="nav-item"><a href="/shop.html" class="nav-link">秒杀区</a></li>
+				</ul>
+			</div>
+		</div>
+	</header>
+
+	<div class="page-wrap archive shop">
+		<!-- Breadcrumbs -->
+		<nav aria-label="breadcrumb" class="page-breadcrumb">
+			<div class="container">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a th:href="@{/}">主页</a></li>
+					<li class="breadcrumb-item active" aria-current="page">秒杀</li>
+				</ol>
+			</div>
+		</nav>
+
+		<div class="page-content">
+			<main class="main-content">
+				<div class="container">
+<!--					<div class="shop-controls d-flex align-items-center">-->
+<!--						<div class="shop-control">-->
+<!--							<label for="per_page" class="control-label">页码:</label>-->
+<!--							<select id="per_page" name="perpage" class="prod-per-page js-select2 select-style">-->
+<!--								<option value="12">12</option>-->
+<!--								<option value="24">24</option>-->
+<!--							</select>-->
+<!--						</div>-->
+<!--						<div class="shop-control">-->
+<!--							<label for="order_by" class="control-label">排序:</label>-->
+<!--							<select id="order_by" name="orderby" class="orderby js-select2 select-style">-->
+<!--								<option value="1">从高到低</option>-->
+<!--								<option value="1">从低到高</option>-->
+<!--							</select>-->
+<!--						</div>-->
+<!--					</div>-->
+
+<!--					<table class="table" id="goodslist">-->
+<!--						<tr><td>商品名称</td><td>商品图片</td><td>商品原价</td><td>秒杀价</td><td>库存数量</td><td>详情</td></tr>-->
+<!--						<tr  th:each="goods,goodsStat : ${goodsList}">-->
+<!--							<td th:text="${goods.goodsName}"></td>-->
+<!--							<td ><img th:src="@{${goods.goodsImg}}" width="100" height="100" /></td>-->
+<!--							<td th:text="${goods.goodsPrice}"></td>-->
+<!--							<td th:text="${goods.miaoshaPrice}"></td>-->
+<!--							<td th:text="${goods.stockCount}"></td>-->
+<!--							&lt;!&ndash;            <td><a th:href="'/goods/to_detail2/'+${goods.id}">详情</a></td>&ndash;&gt;-->
+<!--							<td><a th:href="'/goods_detail.htm?goodsId='+${goods.id}">详情</a></td>-->
+
+<!--						</tr>-->
+<!--					</table>-->
+
+<!--					<ul class="products columns-2" th:each="goods,goodsStat : ${goodsList}" >-->
+<!--						<li class="product">-->
+<!--							<div class="product-thumb">-->
+<!--								<a th:href="@{/single-product.html}" class="product-thumb__link">-->
+<!--									<img th:src="@{${goods.goodsImg}}" width="100" height="100" alt="">-->
+<!--									<span class="btn btn-outline-light shop-link">秒杀</span>-->
+<!--								</a>-->
+<!--							</div>-->
+<!--							<a th:href="@{/single-product.html}">秒杀开始时间:3/8 18:00</a><br>-->
+<!--							<a th:href="@{/single-product.html}">秒杀结束时间:3/8 19:00</a>-->
+<!--							<div class="product-title">-->
+<!--								<a th:href="@{/single-product.html}" th:text="${goods.goodsName}"></a>-->
+<!--							</div>-->
+<!--							<div class="price">-->
+<!--								<ins><span class="amount" th:text="${goods.miaoshaPrice}"></span></ins>-->
+<!--								<del><span class="amount" th:text="${goods.goodsPrice}"></span></del>-->
+<!--							</div>-->
+<!--						</li>-->
+<!--					</ul>-->
+
+					<ul class="products columns-4">
+						<li class="product">
+							<div class="product-thumb">
+								<a href="/goods/to_detail2/1" class="product-thumb__link">
+									<img th:src="@{${goodsList[0].goodsImg}}" alt="">
+									<span class="btn btn-outline-light shop-link">秒杀</span>
+								</a>
+							</div>
+							<a th:href="@{/single-product2.html}">秒杀开始时间:3/8 18:00</a><br>
+							<a th:href="@{/single-product2.html}">秒杀结束时间:3/8 19:00</a>
+							<div class="product-title">
+								<a th:href="@{/single-product2.html}" th:text="${goodsList[0].goodsName}"></a>
+							</div>
+							<div class="price">
+								<ins><span class="amount" th:text="${goodsList[0].miaoshaPrice}"></span></ins>
+								<del><span class="amount" th:text="${goodsList[0].goodsPrice}"></span></del>
+							</div>
+						</li>
+
+<!--						<li class="product">-->
+<!--							<div class="product-thumb">-->
+<!--								<span class="onsale">-30%</span>-->
+<!--								<a th:href="@{/single-product.html}" class="product-thumb__link">-->
+<!--									<img th:src="@{${goodsList[1].goodsImg}}" alt="">-->
+<!--									<span class="btn btn-outline-light shop-link">秒杀</span>-->
+<!--								</a>-->
+<!--							</div>-->
+<!--							<a th:href="@{/single-product.html}">秒杀开始时间:3/8 18:00</a><br>-->
+<!--							<a th:href="@{/single-product.html}">秒杀结束时间:3/8 19:00</a>-->
+<!--							<div class="product-title">-->
+<!--								<a th:href="@{/single-product.html}" th:text="${goodsList[1].goodsName}></a>-->
+<!--							</div>-->
+
+<!--							<div class="price">-->
+<!--								<ins><a  th:text="${goodsList[1].miaoshaPrice}"></a></ins>-->
+<!--								<del><a  th:text="${goodsList[1].goodsPrice}"></a></del>-->
+<!--							</div>-->
+<!--						</li>-->
+
+<!--						<li class="product">-->
+<!--							<div class="product-thumb">-->
+<!--								<a th:href="@{/single-product.html}" class="product-thumb__link">-->
+<!--									<img th:src="@{${goodsList[2].goodsImg}}" alt="">-->
+<!--									<span class="btn btn-outline-light shop-link">购买</span>-->
+<!--								</a>-->
+<!--							</div>-->
+<!--							<a th:href="@{/single-product.html}" th:text="${goodsList[2].goodsName}></a>-->
+
+<!--							<div class="price">-->
+<!--								<span class="amount" th:text="${goodsList[2].goodsPrice}"></span>-->
+<!--							</div>-->
+<!--						</li>-->
+					</ul>
+
+<!--					<nav class="shop-pagination text-center">-->
+<!--						<ul class="pagination justify-content-center">-->
+<!--							&lt;!&ndash; <li>-->
+<!--							  <a href="#" aria-label="Previous">-->
+<!--								<span aria-hidden="true"><i class="flaticon-left-arrow-sign"></i> Previous</span>-->
+<!--							  </a>-->
+<!--							</li> &ndash;&gt;-->
+<!--							<li class="active"><a href="#">01</a></li>-->
+<!--							<li><a href="#">02</a></li>-->
+<!--							<li><a href="#">03</a></li>-->
+<!--							<li><a href="#">04</a></li>-->
+<!--							<li><a href="#">05</a></li>-->
+<!--							<li><a href="#">...</a></li>-->
+<!--							<li><a href="#">28</a></li>-->
+<!--							<li>-->
+<!--								<a href="#" aria-label="Next">-->
+<!--									<span aria-hidden="true">下一页 <i class="flaticon-right-direction"></i></span>-->
+<!--								</a>-->
+<!--							</li>-->
+<!--						</ul>-->
+<!--					</nav>-->
+				</div>
+			</main>
+		</div>
+	</div>
+
+
+	<footer class="page-footer">
+		<div class="container">
+
+			<nav class="footer-navigation">
+				<ul class="nav justify-content-center">
+					<li class="nav-item">
+						<a class="nav-link" href="/static/index.html">Home</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/static/shop.html">Shop</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="promo.html">Promo</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="about.html">About</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="blog.html">Blog</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="contact.html">Contact</a>
+					</li>
+				</ul>
+			</nav>
+
+		</div>
+	</footer>
+
+	<div id="js-back-to-top" class="back-to-top"><i class="flaticon-up-arrow-sign"></i> Page top</div>
+
+	<div class="full-search-wrap">
+		<div class="full-search container">
+			<div class="close-s float-right js-close-search flaticon-cancel-button fi-2x"></div>
+			<form action="/" class="search-full-form">
+				<div class="position-relative">
+					<i class="search-icon flaticon-magnifying-glass-browser fi-2x"></i>
+					<input type="text" id="s-full" class="search-full-form__input" placeholder="Search">
+					<input type="submit" class="d-none">
+				</div>
+				<p class="hint">Type in your search and press enter</p>
+			</form>
+		</div>
+	</div>
+
+</body>
+</html>
