@@ -62,7 +62,7 @@ public class LoginController {
 
 	@RequestMapping("/to_shop")
 	public String toList() {
-		return "shop";
+		return "shop1";
 	}
 
 

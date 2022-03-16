@@ -11,10 +11,14 @@ import java.sql.Date;
  * @create: 2022-02-28 15:04
  **/
 public class GoodsVo extends Goods {
+
     private Double miaoshaPrice;
     private Integer stockCount;
     private Date startDate;
     private Date endDate;
+
+
+
     public Integer getStockCount() {
         return stockCount;
     }
@@ -36,8 +40,5 @@ public class GoodsVo extends Goods {
     public Double getMiaoshaPrice() {
         return miaoshaPrice;
     }
-
-
-
 
 }

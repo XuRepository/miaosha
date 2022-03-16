@@ -46,55 +46,56 @@ public class GoodsController {
     ApplicationContext applicationContext;
 
     @RequestMapping(value="/to_list")
-    public String list(Model model,MiaoshaUser user) {
+    @ResponseBody
+    public List<GoodsVo> list(Model model,MiaoshaUser user) {
         model.addAttribute("user", user);
         List<GoodsVo> goodsList = goodsService.listGoodsVo();
         model.addAttribute("goodsList", goodsList);
-        return "shop";
+        return goodsList;
     }
 
-
-    //页面缓存
-    // MiaoShaUser 的参数化注解！！！UserArgumentResolver
-    @RequestMapping(value = "/to_list1",produces = "text/html")//加上produces，发送给前端指定的类型，在这里返回的是一个html页面,需要和responseBody一起使用
-    @ResponseBody//不加@ResponseBody注解相当于按照和返回String同名jsp页面解析自然就会报错
-    public String list(HttpServletRequest request, HttpServletResponse response,Model model, MiaoshaUser user
-//                       @CookieValue(value = MiaoshaUserService.COOKIE_NAME_TOKEN,required = false) String cookieToken,
-//                       @RequestParam(value = MiaoshaUserService.COOKIE_NAME_TOKEN,required = false) String paramToken
-    ) {
 //
-//        //如果请求没有带上cookie，则认为当前请求未登录，转到登录页面。
-//        if (StringUtils.isEmpty(cookieToken) && StringUtils.isEmpty(paramToken)){
-//            return "login";
+//    //页面缓存
+//    // MiaoShaUser 的参数化注解！！！UserArgumentResolver
+//    @RequestMapping(value = "/to_list1",produces = "text/html")//加上produces，发送给前端指定的类型，在这里返回的是一个html页面,需要和responseBody一起使用
+//    @ResponseBody//不加@ResponseBody注解相当于按照和返回String同名jsp页面解析自然就会报错
+//    public String list(HttpServletRequest request, HttpServletResponse response,Model model, MiaoshaUser user
+////                       @CookieValue(value = MiaoshaUserService.COOKIE_NAME_TOKEN,required = false) String cookieToken,
+////                       @RequestParam(value = MiaoshaUserService.COOKIE_NAME_TOKEN,required = false) String paramToken
+//    ) {
+////
+////        //如果请求没有带上cookie，则认为当前请求未登录，转到登录页面。
+////        if (StringUtils.isEmpty(cookieToken) && StringUtils.isEmpty(paramToken)){
+////            return "login";
+////        }
+////        //拿到token，可以查询redis
+////        String token = StringUtils.isEmpty(paramToken)?cookieToken:paramToken;
+//
+////        MiaoshaUser user = userService.getByToken(response,token);
+//        model.addAttribute("user", user);
+//
+//        //1，从redis中找缓存，找不到再手动渲染。
+//        String html = redisService.get(GoodsKey.getGoodsList,"",String.class);//商品列表只有一个，不需要有key，key为空即可
+//        if (!StringUtils.isEmpty(html)){
+//            return html;
 //        }
-//        //拿到token，可以查询redis
-//        String token = StringUtils.isEmpty(paramToken)?cookieToken:paramToken;
-
-//        MiaoshaUser user = userService.getByToken(response,token);
-        model.addAttribute("user", user);
-
-        //1，从redis中找缓存，找不到再手动渲染。
-        String html = redisService.get(GoodsKey.getGoodsList,"",String.class);//商品列表只有一个，不需要有key，key为空即可
-        if (!StringUtils.isEmpty(html)){
-            return html;
-        }
-
-        //2，缓存中没有html，那就手动渲染一份html出来！
-        //获取秒杀商品列表
-        List<GoodsVo> list = goodsService.listGoodsVo();
-        model.addAttribute("goodsList",list);
-
-        //手动渲染，springboot-thymleaf，查文档可有看出
-        SpringWebContext ctx = new SpringWebContext(request, response,
-                request.getServletContext(), request.getLocale(), model.asMap(), applicationContext);
-        //手动渲染
-        html = thymeleafViewResolver.getTemplateEngine().process("goods_list", ctx);
-        if (!StringUtils.isEmpty(html)) {
-            redisService.set(GoodsKey.getGoodsList, "", html);//渲染好的纯html页面加入缓存
-        }
-        return html;
-
-    }
+//
+//        //2，缓存中没有html，那就手动渲染一份html出来！
+//        //获取秒杀商品列表
+//        List<GoodsVo> list = goodsService.listGoodsVo();
+//        model.addAttribute("goodsList",list);
+//
+//        //手动渲染，springboot-thymleaf，查文档可有看出
+//        SpringWebContext ctx = new SpringWebContext(request, response,
+//                request.getServletContext(), request.getLocale(), model.asMap(), applicationContext);
+//        //手动渲染
+//        html = thymeleafViewResolver.getTemplateEngine().process("goods_list", ctx);
+//        if (!StringUtils.isEmpty(html)) {
+//            redisService.set(GoodsKey.getGoodsList, "", html);//渲染好的纯html页面加入缓存
+//        }
+//        return html;
+//
+//    }
 
 
     @RequestMapping(value = "/detail/{goodsId}")

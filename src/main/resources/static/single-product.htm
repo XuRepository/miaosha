@@ -1,6 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+	<title>商品详情</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<!-- jquery -->
+	<script type="text/javascript" src="/js/jquery.min.js"></script>
+	<!-- bootstrap -->
+	<link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css" />
+	<script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+	<!-- jquery-validator -->
+	<script type="text/javascript" src="/jquery-validation/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="/jquery-validation/localization/messages_zh.min.js"></script>
+	<!-- layer -->
+	<script type="text/javascript" src="/layer/layer.js"></script>
+	<!-- md5.js -->
+	<script type="text/javascript" src="/js/md5.min.js"></script>
+	<!-- common.js -->
+	<script type="text/javascript" src="/js/common.js"></script>
+
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -23,6 +41,133 @@
 	<!-- Theme -->
 	<link rel="stylesheet" href="assets/css/style.css">
 	<meta name="theme-color" content="#ECECEC">
+
+	<script>
+
+		function getMiaoshaResult(goodsId){
+			g_showLoading();
+			$.ajax({
+				url:"/miaosha/result",
+				type:"GET",
+				data:{
+					goodsId:$("#goodsId").val(),
+				},
+				success:function(data){
+					if(data.code == 0){
+						var result = data.data;
+						if(result < 0){
+							layer.msg("对不起，秒杀失败");
+						}else if(result == 0){//继续轮询
+							setTimeout(function(){
+								getMiaoshaResult(goodsId);
+							}, 50);
+						}else{
+							layer.confirm("恭喜你，秒杀成功！查看订单？", {btn:["确定","取消"]},
+									function(){
+										window.location.href="/order_detail.htm?orderId="+result;
+									},
+									function(){
+										layer.closeAll();
+									});
+						}
+					}else{
+						layer.msg(data.msg);
+					}
+				},
+				error:function(){
+					layer.msg("客户端请求有误");
+				}
+			});
+		}
+
+		function doMiaosha(){
+			$.ajax({
+				url:"/miaosha/do_miaosha",
+				type:"POST",
+				data:{
+					goodsId:$("#goodsId").val(),
+				},
+				success:function(data){
+					if(data.code == 0){
+						//window.location.href="/order_detail.htm?orderId="+data.data.id;
+						getMiaoshaResult($("#goodsId").val());
+					}else{
+						layer.msg(data.msg);
+					}
+				},
+				error:function(){
+					layer.msg("客户端请求有误");
+				}
+			});
+
+		}
+
+		function render(detail){
+			var miaoshaStatus = detail.miaoshaStatus;
+			var  remainSeconds = detail.remainSeconds;
+			var goods = detail.goods;
+			var user = detail.user;
+			if(user){
+				$("#userTip").hide();
+			}
+			$("#goodsName").text(goods.goodsName);
+			$("#goodsImg").attr("src", goods.goodsImg);
+			$("#startTime").text(new Date(goods.startDate).format("yyyy-MM-dd hh:mm:ss"));
+			$("#remainSeconds").val(remainSeconds);
+			$("#goodsId").val(goods.id);
+			$("#goodsPrice").text(goods.goodsPrice);
+			$("#miaoshaPrice").text(goods.miaoshaPrice);
+			$("#stockCount").text(goods.stockCount);
+			countDown();
+		}
+
+		$(function(){
+			//countDown();
+			getDetail();
+		});
+
+		function getDetail(){
+			var goodsId = g_getQueryString("goodsId");
+			$.ajax({
+				url:"/goods/detail/"+goodsId,
+				type:"GET",
+				success:function(data){
+					if(data.code == 0){
+						render(data.data);
+					}else{
+						layer.msg(data.msg);
+					}
+				},
+				error:function(){
+					layer.msg("客户端请求有误");
+				}
+			});
+		}
+
+		function countDown(){
+			var remainSeconds = $("#remainSeconds").val();
+			var timeout;
+			if(remainSeconds > 0){//秒杀还没开始，倒计时
+				$("#buyButton").attr("disabled", true);
+				$("#miaoshaTip").html("秒杀倒计时："+remainSeconds+"秒");
+				timeout = setTimeout(function(){
+					$("#countDown").text(remainSeconds - 1);
+					$("#remainSeconds").val(remainSeconds - 1);
+					countDown();
+				},1000);
+			}else if(remainSeconds == 0){//秒杀进行中
+				$("#buyButton").attr("disabled", false);
+				if(timeout){
+					clearTimeout(timeout);
+				}
+				$("#miaoshaTip").html("秒杀进行中");
+			}else{//秒杀已经结束
+				$("#buyButton").attr("disabled", true);
+				$("#miaoshaTip").html("秒杀已经结束");
+			}
+		}
+
+	</script>
 </head>
 <body>
 	<div class="head-line"></div>
@@ -59,7 +204,7 @@
 					</div>
 					<div class="quick-access__item">
 						<div class="header-mini-cart">
-							<a href="cart.htm" class="mini-cart-link">
+							<a href="cart.html" class="mini-cart-link">
 								<i class="cart__icon flaticon-online-shopping-cart fi-2x"></i>
 								<span class="mini-cart-link__qty">2 items</span>
 							</a>
@@ -117,10 +262,10 @@
 
 				<ul class="nav justify-content-center">
 					<li class="nav-item">
-						<a class="nav-link" href="index.htm">Home</a>
+						<a class="nav-link" href="index.html">Home</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link active" href="../templates/shop_old.htm">Shop</a>
+						<a class="nav-link active" href="shop.html">Shop</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="promo.html">Promo</a>
@@ -149,15 +294,15 @@
 		<div class="shop-categories-nav">
 			<div class="container">
 				<ul class="nav justify-content-between">
-					<li class="nav-item"><a href="../templates/shop_old.htm" class="nav-link active">All</a></li>
-					<li class="nav-item"><a href="../templates/shop_old.htm" class="nav-link">Art</a></li>
-					<li class="nav-item"><a href="../templates/shop_old.htm" class="nav-link">Clocks</a></li>
-					<li class="nav-item"><a href="../templates/shop_old.htm" class="nav-link">Furniture</a></li>
-					<li class="nav-item"><a href="../templates/shop_old.htm" class="nav-link">Gadgets</a></li>
-					<li class="nav-item"><a href="../templates/shop_old.htm" class="nav-link">Lighting</a></li>
-					<li class="nav-item"><a href="../templates/shop_old.htm" class="nav-link">Placemats</a></li>
-					<li class="nav-item"><a href="../templates/shop_old.htm" class="nav-link">Workspace</a></li>
-					<li class="nav-item"><a href="../templates/shop_old.htm" class="nav-link">Sale</a></li>
+					<li class="nav-item"><a href="shop.html" class="nav-link active">All</a></li>
+					<li class="nav-item"><a href="shop.html" class="nav-link">Art</a></li>
+					<li class="nav-item"><a href="shop.html" class="nav-link">Clocks</a></li>
+					<li class="nav-item"><a href="shop.html" class="nav-link">Furniture</a></li>
+					<li class="nav-item"><a href="shop.html" class="nav-link">Gadgets</a></li>
+					<li class="nav-item"><a href="shop.html" class="nav-link">Lighting</a></li>
+					<li class="nav-item"><a href="shop.html" class="nav-link">Placemats</a></li>
+					<li class="nav-item"><a href="shop.html" class="nav-link">Workspace</a></li>
+					<li class="nav-item"><a href="shop.html" class="nav-link">Sale</a></li>
 				</ul>
 			</div>
 		</div>
@@ -169,9 +314,9 @@
 			<div class="container">
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="/">主页</a></li>
-					<li class="breadcrumb-item"><a href="../templates/shop_old.htm">购物</a></li>
-					<li class="breadcrumb-item"><a href="../templates/shop_old.htm">促销</a></li>
-					<li class="breadcrumb-item active" aria-current="page">商务电脑包</a></li>
+					<li class="breadcrumb-item"><a href="shop.html">购物</a></li>
+					<li class="breadcrumb-item"><a href="shop.html">促销</a></li>
+					<li class="breadcrumb-item active" aria-current="page">goodsName</a></li>
 				</ol>
 			</div>
 		</nav>
@@ -186,7 +331,7 @@
 									<span class="onsale">-??%</span>
 									<div class="product-gallery">
 										<div id="js-product-big" class="product-gallery__big">
-											<img src="images/05_home_page_001.jpg" alt="">
+											<img id="goodsImg" alt="">
 										</div>
 										<div id="js-product-nav" class="product-gallery-thumbs">
 											<div class="product-gallery-thumbs__item active" data-large-src="images/05_home_page_001.jpg">
@@ -213,33 +358,52 @@
 							</div>
 
 							<div class="product-summary summary col-lg-7">
-								<h1 class="h2 product-title">商务电脑包</h1>
+								<h1 class="h2 product-title" id="goodsName"></h1>
 
 								<div class="price">
-									<ins><span class="amount">$?3.00</span></ins>
-									<del><span class="amount">$44.00</span></del>
+									<ins><span class="amount" id="goodsPrice"></span></ins>
+									<del><span class="amount" id="miaoshaPrice"></span></del>
 								</div>
 
-								<form action="/" class="cart-form">
-									<div class="cart-form__item quantity quantity">
-										<label for="quantity">数量:</label>
-										<select id="quantity" class="select-style qty js-qty">
-											<option value="usd">1</option>
-											<option value="eur">2</option>
-											<option value="gbr">3</option>
-										</select>
-									</div>
+								<div class="price">
+									<ins><span class="amount" >库存</span></ins>
+									<del><span class="amount" id="stockCount"></span></del>
+								</div>
 
-									<div class="color-variants">
-										<div>颜色: <span id="active-color">灰色</span></div>
-										<ul class="colors-list">
-											<li class="colors-list__item colors-list__item_active"><a href="single-product.htm"><span class="prod-color" style="background-color: #7E7D82"></span></a></li>
-											<li class="colors-list__item"><a href="single-product.htm"><span class="prod-color" style="background-color: #333339"></span></a></li>
-										</ul>
-									</div>
-								</form>
+								<tr>
+									<td>秒杀开始时间</td>
+									<td id="startTime"></td>
+									<td >
+										<input type="hidden" id="remainSeconds" />
+										<span id="miaoshaTip"></span>
+									</td>
+									<td>
+										<!--
+                                            <form id="miaoshaForm" method="post" action="/miaosha/do_miaosha">
+                                                <button class="btn btn-primary btn-block" type="submit" id="buyButton">立即秒杀</button>
+                                                <input type="hidden" name="goodsId"  id="goodsId" />
+                                            </form>-->
+										<button class="btn btn-primary btn-block" type="button" id="buyButton"onclick="doMiaosha()">立即秒杀</button>
+										<input type="hidden" name="goodsId"  id="goodsId" />
+									</td>
+								</tr>
 
-								<a href="cart.htm" class="btn btn-primary btn-lg add_to_cart_button">加入购物车</a>
+<!--								<form action="/" class="cart-form">-->
+<!--									<div class="cart-form__item quantity quantity">-->
+<!--										<label for="quantity">数量:</label>-->
+
+<!--									</div>-->
+
+<!--									<div class="color-variants">-->
+<!--										<div>颜色: <span id="active-color">灰色</span></div>-->
+<!--										<ul class="colors-list">-->
+<!--											<li class="colors-list__item colors-list__item_active"><a href="single-product.htm"><span class="prod-color" style="background-color: #7E7D82"></span></a></li>-->
+<!--											<li class="colors-list__item"><a href="single-product.htm"><span class="prod-color" style="background-color: #333339"></span></a></li>-->
+<!--										</ul>-->
+<!--									</div>-->
+<!--								</form>-->
+
+<!--								<a href="cart.html" class="btn btn-primary btn-lg add_to_cart_button">加入购物车</a>-->
 
 								<div class="product-summary__featured">
 									<div class="row">
@@ -399,10 +563,10 @@
 			<nav class="footer-navigation">
 				<ul class="nav justify-content-center">
 					<li class="nav-item">
-						<a class="nav-link" href="index.htm">Home</a>
+						<a class="nav-link" href="index.html">Home</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="../templates/shop_old.htm">Shop</a>
+						<a class="nav-link" href="shop.html">Shop</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="promo.html">Promo</a>
