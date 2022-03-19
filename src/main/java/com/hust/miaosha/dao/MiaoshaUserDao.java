@@ -11,7 +11,7 @@ public interface MiaoshaUserDao {
     MiaoshaUser getById(@Param("id") long id);
 
     @Select("select group_id from miaosha_user where id = #{id}")
-    long getGroupIdById(@Param("id") long id);
+    Long getGroupIdById(@Param("id") long id);
 
     @Update("update miaosha_user set password = #{password} where id = #{id}")
     int update(MiaoshaUser user);

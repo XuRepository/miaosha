@@ -11,7 +11,7 @@ public class GroupVo {
     private long groupId;
     private int headCount;
     private int targetCount;//折扣=headCount/targetCount
-    private long discount = 1;
+    private double discount;
 
     public long getGroupId() {
         return groupId;
@@ -37,8 +37,11 @@ public class GroupVo {
         this.targetCount = targetCount;
     }
 
-    public void setDiscount() {
-        this.discount =  1-headCount/targetCount;
+    public void setDiscount(double discount) {
+        this.discount = discount;
     }
 
+    public double getDiscount() {
+        return discount;
+    }
 }

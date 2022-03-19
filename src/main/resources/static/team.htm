@@ -1,0 +1,90 @@
+<!DOCTYPE HTML>
+<html >
+<head>
+    <title>队伍信息</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!-- jquery -->
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <!-- bootstrap -->
+    <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css" />
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+    <!-- jquery-validator -->
+    <script type="text/javascript" src="/jquery-validation/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="/jquery-validation/localization/messages_zh.min.js"></script>
+    <!-- layer -->
+    <script type="text/javascript" src="/layer/layer.js"></script>
+    <!-- md5.js -->
+    <script type="text/javascript" src="/js/md5.min.js"></script>
+    <!-- common.js -->
+    <script type="text/javascript" src="/js/common.js"></script>
+</head>
+<body>
+
+<div class="panel panel-default" >
+    <div class="panel-heading">我的队伍</div>
+<!--    <div class="panel-body">-->
+<!--        <span id="userTip"> 您还没有登录，请登陆后再操作<br/></span>-->
+<!--        <span>没有收货地址的提示。。。</span>-->
+<!--    </div>-->
+    <table class="table">
+
+        <tr>
+            <td>队伍id</td>
+            <td colspan="3" id="groupId"></td>
+        </tr>
+
+        <tr>
+            <td>队伍人数</td>
+            <td colspan="3" id="headCount"></td>
+        </tr>
+
+        <tr>
+            <td>队伍折扣</td>
+            <td colspan="3"  id="discount"></td>
+        </tr>
+
+    </table>
+</div>
+</body>
+<script>
+
+    function render(team){
+
+        var groupId = team.groupId;
+        var  headCount = team.headCount;
+        var targetCount = team.targetCount;
+        var discount = team.discount;
+
+        // if(user){
+        //     $("#userTip").hide();
+        // }
+        $("#groupId").text(team.groupId);
+        $("#headCount").text(team.headCount);
+        $("#discount").text(team.discount);
+    }
+
+    $(function(){
+        //countDown();
+        getGroup();
+    });
+
+    function getGroup(){
+        // var goodsId = g_getQueryString("groupId");
+        $.ajax({
+            url:"/groupMiaosha/get",
+            type:"GET",
+            success:function(data){
+                if(data.code == 0){
+                    render(data.data);
+                }else{
+                    layer.msg(data.msg);
+                }
+            },
+            error:function(){
+                layer.msg("客户端请求有误");
+            }
+        });
+    }
+
+</script>
+</html>

@@ -29,6 +29,7 @@ public class CodeMsg {
 
 
 	public static CodeMsg NO_GROUP = new CodeMsg(500502, "没有队伍");
+	public static CodeMsg HAVE_GROUP = new CodeMsg(500502, "已经有队伍");
 
 
 

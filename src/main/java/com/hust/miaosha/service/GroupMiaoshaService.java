@@ -63,12 +63,11 @@ public class GroupMiaoshaService {
     }
 
     public long getGroupByUid(MiaoshaUser user) {
+        if(miaoshaUserDao.getGroupIdById(user.getId())==null) return 0;
+
         return miaoshaUserDao.getGroupIdById(user.getId());
     }
 
-    public void groupMiaosha(MiaoshaUser user, Group group, MiaoshaGoods goods) {
-        groupDao.groupMiaosha(user,group,goods);
-    }
 
     public void updateGroup(long groupId) {
         Group group = groupDao.getGroup(groupId);
