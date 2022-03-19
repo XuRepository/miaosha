@@ -10,13 +10,12 @@ import java.sql.Date;
  * @author: XuJY
  * @create: 2022-02-28 15:04
  **/
-public class GoodsVo extends Goods {
+public class GroupGoodsVo extends Goods {
 
     private Double miaoshaPrice;
     private Integer stockCount;
     private Date startDate;
     private Date endDate;
-    private int discount;
 
 
 
@@ -42,11 +41,4 @@ public class GoodsVo extends Goods {
         return miaoshaPrice;
     }
 
-    public int getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(int discount) {
-        this.discount = discount;
-    }
 }

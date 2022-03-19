@@ -3,7 +3,11 @@ package com.hust.miaosha.dao;
 import com.hust.miaosha.domain.Group;
 import com.hust.miaosha.domain.MiaoshaGoods;
 import com.hust.miaosha.domain.MiaoshaUser;
-import org.apache.ibatis.annotations.Mapper;
+import com.hust.miaosha.vo.GoodsVo;
+import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @program: miaosha1
@@ -14,14 +18,23 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface GroupDao {
 
-    public void createGroup(MiaoshaUser user);
+//    @Insert("insert into miaosha_user(id,nickname,password,salt,register_date) values(#{id},#{nickname},#{password},#{salt},#{registerDate})")
 
-    public void joinGroup(MiaoshaUser miaoshaUser, long groupId);
+    @Insert("insert into miaosha_group(group_id,head_count) values(#{leaderId},#{headCount})")
+    void createGroup(@Param("leaderId") long leaderId, @Param("headCount") int headCount);
 
-    public Group getGroup(MiaoshaUser miaoshaUser);
 
-    public void groupMiaosha(MiaoshaUser miaoshaUser, Group group, MiaoshaGoods goods);
+    @Select("select * from miaosha_group where group_id =#{groupId}")
+    Group getGroup(@Param("groupId") Long groupId);
+
+    void groupMiaosha(MiaoshaUser miaoshaUser, Group group, MiaoshaGoods goods);
+
+    @Update("update miaosha_group set head_count = #{headCount} where group_id = #{groupId}")
+    void updateHeadCount(Group group);
+
+
 
 
 
 }
+

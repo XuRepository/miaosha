@@ -1,28 +1,17 @@
-package com.hust.miaosha.domain;
+package com.hust.miaosha.vo;
 
 /**
  * @program: miaosha1
- * @description: 团购秒杀
+ * @description: GroupVo
  * @author: XuJY
- * @create: 2022-03-09 14:06
+ * @create: 2022-03-19 13:57
  **/
-public class Group {
+public class GroupVo {
 
     private long groupId;
     private int headCount;
     private int targetCount;//折扣=headCount/targetCount
-//    private long goodsId;
-
-
-    public Group() {
-    }
-
-    public Group(long groupId, int headCount, int targetCount, long goodsId) {
-        this.groupId = groupId;
-        this.headCount = headCount;
-        this.targetCount = targetCount;
-//        this.goodsId = goodsId;
-    }
+    private long discount = 1;
 
     public long getGroupId() {
         return groupId;
@@ -48,15 +37,8 @@ public class Group {
         this.targetCount = targetCount;
     }
 
-    public int getDiscount(){
-        return 1-headCount/targetCount;
+    public void setDiscount() {
+        this.discount =  1-headCount/targetCount;
     }
 
-//    public long getGoodsId() {
-//        return goodsId;
-//    }
-//
-//    public void setGoodsId(long goodsId) {
-//        this.goodsId = goodsId;
-//    }
 }

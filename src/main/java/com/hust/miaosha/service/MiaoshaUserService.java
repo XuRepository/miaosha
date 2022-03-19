@@ -36,6 +36,24 @@ public class MiaoshaUserService {
     @Autowired
     RedisService redisService;
 
+
+    //设置团队
+    public boolean updateGroup(long id,long groupId,String token){
+        //取user
+        MiaoshaUser user = getById(id);
+        if (user == null) {
+            throw new GlobalException(CodeMsg.MOBILE_NOT_EXIST);
+        }
+        //更新数据库
+        MiaoshaUser toBeUpdate = new MiaoshaUser();
+        toBeUpdate.setId(id);
+        toBeUpdate.setGroupId(groupId);
+        miaoshaUserDao.updateGroup(toBeUpdate);
+
+        return true;
+
+    }
+
     //对象级缓存
     public MiaoshaUser getById(long id) {
 

@@ -28,6 +28,9 @@ public class CodeMsg {
 	public static CodeMsg REPEATE_MIAOSHA = new CodeMsg(500501, "不能重复秒杀");
 
 
+	public static CodeMsg NO_GROUP = new CodeMsg(500502, "没有队伍");
+
+
 
 
 

@@ -1,5 +1,6 @@
 package com.hust.miaosha.dao;
 
+import com.hust.miaosha.domain.GroupOrder;
 import com.hust.miaosha.domain.MiaoshaOrder;
 import com.hust.miaosha.domain.OrderInfo;
 import org.apache.ibatis.annotations.*;
@@ -28,6 +29,9 @@ public interface OrderDao {
 
     @Insert("insert into miaosha_order (user_id, goods_id, order_id)values(#{userId}, #{goodsId}, #{orderId})")
     int insertMiaoshaOrder(MiaoshaOrder miaoshaOrder);
+
+    @Insert("insert into tuangou_order (user_id, goods_id, order_id)values(#{userId}, #{goodsId}, #{orderId})")
+    int insertTuangouOrder(GroupOrder groupOrder);
 
     @Select("select * from order_info where id = #{orderId}")
     OrderInfo getOrderById(long orderId);

@@ -53,7 +53,7 @@ public class UserUtil {
 		System.out.println("insert to db");
 		//登录，生成token
 		String urlString = "http://localhost:8080/login/do_login";
-		File file = new File("D:\\桌面\\0703\\华科\\实训\\apache-jmeter-5.4.3\\tokens.txt");
+		File file = new File("D:\\tokens.txt");
 		if(file.exists()) {
 			file.delete();
 		}
