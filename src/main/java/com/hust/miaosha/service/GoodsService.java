@@ -54,6 +54,10 @@ public class GoodsService {
         return goodsDao.getGoodsVoByGoodsId(goodsId);
     }
 
+    public GoodsVo getGoodsVoByGoodsId1(long goodsId) {
+        return goodsDao.getGoodsVoByGoodsId1(goodsId);
+    }
+
     /**
      * 重置
      * @param goodsList

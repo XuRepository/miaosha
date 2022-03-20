@@ -29,7 +29,9 @@ public class CodeMsg {
 
 
 	public static CodeMsg NO_GROUP = new CodeMsg(500502, "没有队伍");
-	public static CodeMsg HAVE_GROUP = new CodeMsg(500502, "已经有队伍");
+	public static CodeMsg HAVE_GROUP = new CodeMsg(500503, "已经有队伍");
+	public static final CodeMsg GROUP_NOT_EXIT = new CodeMsg(500504, "队伍不存在");
+
 
 
 

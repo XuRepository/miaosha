@@ -23,6 +23,22 @@
 	<!-- Theme -->
 	<link rel="stylesheet" href="assets/css/style.css">
 	<meta name="theme-color" content="#ECECEC">
+
+	<!-- jquery -->
+	<script type="text/javascript" src="/js/jquery.min.js"></script>
+	<!-- bootstrap -->
+	<link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css" />
+	<script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+	<!-- jquery-validator -->
+	<script type="text/javascript" src="/jquery-validation/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="/jquery-validation/localization/messages_zh.min.js"></script>
+	<!-- layer -->
+	<script type="text/javascript" src="/layer/layer.js"></script>
+	<!-- md5.js -->
+	<script type="text/javascript" src="/js/md5.min.js"></script>
+	<!-- common.js -->
+	<script type="text/javascript" src="/js/common.js"></script>
+
 	<script>
 		var data=[];
 		function reqListener () {
@@ -41,7 +57,7 @@
 			// <td><a th:href="'/goods_detail.htm?goodsId='+${goods.id}">详情</a></td>
 				var goodsid= data[i].id;
 				// _a.href="/goods_detail.htm?goodsId="+goodsid;     //商品详情链接
-				_a.href="/single-product.htm?goodsId="+goodsid;     //商品详情链接
+				_a.href="/group-product.htm?goodsId="+goodsid;     //商品详情链接
 				var _img=document.createElement("img");
 				_img.src=data[i].goodsImg;           //图片路径
 				_a.appendChild(_img);
@@ -84,6 +100,51 @@
 		oReq.addEventListener("load", reqListener);
 		oReq.open("GET", "/groupMiaosha/to_list");
 		oReq.send();
+
+		function createGroup(){
+			$.ajax({
+				url:"/groupMiaosha/createGroup",
+				type:"GET",
+				success:function(data){
+					// console.log(data);
+					if(data.code == 0){
+						alert("创建队伍成功")
+					}else{
+						// console.log(data.code);
+						alert(data.msg);
+					}
+				},
+				error:function(){
+					layer.msg("客户端请求有误");
+				}
+			});
+		}
+
+		function joinGroup(){
+			var groupId = $('#groupidInput').val();
+			console.log(groupId);
+			$.ajax({
+				url:"/groupMiaosha/joinGroup/"+groupId,
+				type:"POST",
+				data:{
+					groupId:$("#groupId").val(),
+				},
+				success:function(data){
+					if(data.code == 0){
+						alert("加入团队成功！")
+					}else{
+						alert(data.msg);
+					}
+				},
+				error:function(){
+					alert("客户端请求有误");
+				}
+			});
+		}
+
+		function toTeam() {
+			window.location.href="/team.htm";
+		}
 
 	</script>
 </head>
@@ -237,9 +298,32 @@
 			</div>
 		</nav>
 
-		<li class="nav-item">
-			<a class="nav-link" href="team.htm">查看我的队伍信息</a>
-		</li>
+<!--		<button class="btn btn-primary btn-block" type="button" id="buyButton"onclick="doMiaosha()">立即秒杀</button>-->
+		<td>
+			<button class="btn btn-primary btn-block" type="button" onclick="toTeam()">查看我的队伍</button>
+			<button class="btn btn-primary btn-block" type="button" onclick="createGroup()">创建队伍</button>
+<!--			<button class="btn btn-primary btn-block" type="button" onclick="joinGroup()">加入队伍</button>-->
+<!--			<form class="subscribe-form form-inline justify-content-center">-->
+<!--				<input type="text" class="form-control form-control-lg subscribe-form__input" id="groupId" placeholder="队伍id">-->
+<!--				<button type="submit" class="btn btn-primary btn-lg subscribe-form__btn" onclick="joinGroup()">加入队伍</button>-->
+<!--			</form>-->
+			<div class="form-label-group">
+				<input type="text" id="groupidInput" class="form-control" placeholder="队伍id" required>
+				<button type="submit" class="btn btn-primary btn-lg subscribe-form__btn" onclick="joinGroup()">加入队伍</button>
+
+				<!--				<label for="idInput">队伍id</label>-->
+			</div>
+		</td>
+
+
+
+
+<!--		<li class="nav-item">-->
+<!--			<a class="nav-link" href="team.htm">查看我的队伍信息</a>-->
+<!--			<a class="nav-link" id="createGroup">创建我的队伍</a>-->
+
+<!--		</li>-->
+
 
 
 		<div class="page-content">

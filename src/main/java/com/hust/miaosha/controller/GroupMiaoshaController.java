@@ -85,12 +85,18 @@ public class GroupMiaoshaController {
         if (groupMiaoshaService.getGroupByUid(user)!=0){
             return Result.error(CodeMsg.HAVE_GROUP);
         }
+
+        if (groupMiaoshaService.getGroup(groupId) == null){
+            return Result.error(CodeMsg.GROUP_NOT_EXIT);
+        }
         //加入队伍
         groupMiaoshaService.joinGroup(user,groupId);
+
         //更新个人信息
         groupMiaoshaService.updateGroup(groupId);
 
         return Result.success("加团成功");
+
     }
 
 //    /**
@@ -178,8 +184,9 @@ public class GroupMiaoshaController {
             return Result.error(CodeMsg.NO_GROUP);
         }
         Group group = groupMiaoshaService.getGroup(groupId);
-        int discount = group.getDiscount();
+        double discount = group.getDiscount();
         goods.setDiscount(discount);
+
 
         // 减库存 下订单 写入秒杀订单
         OrderInfo orderInfo = groupMiaoshaService.miaosha(user, goods);

@@ -63,6 +63,29 @@ public class OrderController {
         return Result.success(vo);
     }
 
+    @RequestMapping("/groupDetail")
+    @ResponseBody
+    public Result<OrderDetailVo> infoGroupOrder(Model model, MiaoshaUser user,
+                                      @RequestParam("orderId") long orderId) {
+        if(user == null) {
+            return Result.error(CodeMsg.SESSION_ERROR);
+        }
+
+        OrderInfo order = orderService.getOrderById(orderId);
+        if(order == null) {
+            return Result.error(CodeMsg.ORDER_NOT_EXIST);
+        }
+
+        long goodsId = order.getGoodsId();
+        GoodsVo goods = goodsService.getGoodsVoByGoodsId1(goodsId);
+
+        OrderDetailVo vo = new OrderDetailVo();
+        vo.setOrder(order);
+        vo.setGoods(goods);
+
+        return Result.success(vo);
+    }
+
     /**
      * 时序图
      * @param model

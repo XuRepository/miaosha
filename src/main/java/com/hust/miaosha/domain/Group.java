@@ -48,8 +48,8 @@ public class Group {
         this.targetCount = targetCount;
     }
 
-    public int getDiscount(){
-        return 1-headCount/targetCount;
+    public double getDiscount(){
+        return 1.0-1.0*headCount/targetCount;
     }
 
 //    public long getGoodsId() {

@@ -71,6 +71,7 @@ public class GroupMiaoshaService {
 
     public void updateGroup(long groupId) {
         Group group = groupDao.getGroup(groupId);
+        if (group==null) return ;
         group.setHeadCount(group.getHeadCount()+1);
         groupDao.updateHeadCount(group);
     }
@@ -132,7 +133,9 @@ public class GroupMiaoshaService {
         orderInfo.setGoodsId(goods.getId());
         orderInfo.setGoodsName(goods.getGoodsName());
 
+//        System.out.println(goods.getDiscount());
         orderInfo.setGoodsPrice(goods.getMiaoshaPrice()*goods.getDiscount());
+//        System.out.println(orderInfo.getGoodsPrice());
 
         orderInfo.setOrderChannel(1);
         orderInfo.setStatus(0);

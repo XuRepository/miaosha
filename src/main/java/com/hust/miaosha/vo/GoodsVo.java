@@ -16,7 +16,7 @@ public class GoodsVo extends Goods {
     private Integer stockCount;
     private Date startDate;
     private Date endDate;
-    private int discount;
+    private double discount;
 
 
 
@@ -42,11 +42,11 @@ public class GoodsVo extends Goods {
         return miaoshaPrice;
     }
 
-    public int getDiscount() {
+    public double getDiscount() {
         return discount;
     }
 
-    public void setDiscount(int discount) {
+    public void setDiscount(double discount) {
         this.discount = discount;
     }
 }
