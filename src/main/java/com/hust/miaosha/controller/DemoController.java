@@ -7,14 +7,18 @@ import com.hust.miaosha.redis.keyPrefix.UserKey;
 import com.hust.miaosha.result.CodeMsg;
 import com.hust.miaosha.result.Result;
 import com.hust.miaosha.service.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 @RequestMapping("/demo")
+@Api("demo")
 public class DemoController {
 
 	@Autowired
@@ -45,6 +49,7 @@ public class DemoController {
 	//1.rest api json输出 2.页面
 	@RequestMapping("/hello")
 	@ResponseBody
+	@ApiOperation(notes = "hello",value = "hello")
 	public Result<String> hello() {
 		return Result.success("hello,hust");
 		// return new Result(0, "success", "hello,hust");

@@ -2,6 +2,7 @@ package com.hust.miaosha;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
  * @program: miaosha1
@@ -10,6 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @create: 2022-02-25 12:56
  **/
 @SpringBootApplication
+@EnableSwagger2
 public class MainApplication {
     public static void main(String[] args) {
         SpringApplication.run(MainApplication.class);

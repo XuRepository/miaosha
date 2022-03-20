@@ -8,6 +8,8 @@ import com.hust.miaosha.vo.GoodsDetailVo;
 import com.hust.miaosha.vo.GoodsVo;
 import com.hust.miaosha.vo.GroupVo;
 import com.sun.org.apache.bcel.internal.classfile.Code;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,6 +37,7 @@ import java.util.List;
  **/
 @Controller
 @RequestMapping("/groupMiaosha")
+@Api("团购秒杀")
 public class GroupMiaoshaController {
     @Autowired
     GroupMiaoshaService groupMiaoshaService;
@@ -55,6 +58,7 @@ public class GroupMiaoshaController {
      */
     @RequestMapping("/createGroup")
     @ResponseBody
+    @ApiOperation(value="创建团队", notes="创建团队")
     public Result<String> createGroup(MiaoshaUser user){
 
         if (user == null) {
