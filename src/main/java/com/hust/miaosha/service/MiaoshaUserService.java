@@ -36,6 +36,11 @@ public class MiaoshaUserService {
     @Autowired
     RedisService redisService;
 
+    public MiaoshaUser info(MiaoshaUser user){
+
+        return miaoshaUserDao.getById(user.getId());
+    }
+
 
     //设置团队
     public boolean updateGroup(long id,long groupId,String token){

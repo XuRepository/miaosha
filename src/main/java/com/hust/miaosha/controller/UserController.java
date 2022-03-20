@@ -38,7 +38,7 @@ public class UserController {
     @RequestMapping("/info")
     @ResponseBody
     public Result<MiaoshaUser> info(Model model, MiaoshaUser user) {
-        return Result.success(user);
+        return Result.success(userService.info(user));
     }
 
     /**
@@ -86,7 +86,7 @@ public class UserController {
     /**
      * 时序图用：修改个人信息
      * @param model
-     * @param id
+     * @param
      * @return
      */
     @RequestMapping("/updateInfo")
