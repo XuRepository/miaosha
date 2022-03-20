@@ -4,6 +4,9 @@ import com.hust.miaosha.domain.GroupOrder;
 import com.hust.miaosha.domain.MiaoshaOrder;
 import com.hust.miaosha.domain.OrderInfo;
 import org.apache.ibatis.annotations.*;
+import org.springframework.web.bind.annotation.PathVariable;
+
+import java.util.List;
 
 /**
  * @program: miaosha1
@@ -42,9 +45,14 @@ public interface OrderDao {
     @Delete("delete from miaosha_order")
     void deleteMiaoshaOrders();
 
+    @Select("select * from order_info where user_id = #{userId}")
+    List<OrderInfo> getOrderListByUid(@PathVariable("userId") Long userId);
+
+
     //时序图
     void updateOrders();
 
     //时序图
     void updateMiaoshaOrders();
+
 }

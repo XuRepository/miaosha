@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @program: miaosha1
@@ -106,5 +107,13 @@ public class OrderService {
     }
 
 
+    /**
+     * 根据用户id查询
+     * @return
+     */
+    public List<OrderInfo> getOrderListByUid(Long userId) {
 
+        return orderDao.getOrderListByUid(userId);
+
+    }
 }

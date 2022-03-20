@@ -1,7 +1,7 @@
 package com.hust.miaosha.result;
 
 public class CodeMsg {
-    private int code;
+	private int code;
 	private String msg;
 
 	//通用的错误码
@@ -22,6 +22,8 @@ public class CodeMsg {
 
 	//订单模块 5004XX
 	public static CodeMsg ORDER_NOT_EXIST = new CodeMsg(500400, "订单不存在");
+	public static final CodeMsg NO_ORDER = new CodeMsg(500401, "没有订单");
+
 
 	//秒杀模块 5005XX
 	public static CodeMsg MIAO_SHA_OVER = new CodeMsg(500500, "商品已经秒杀完毕");
