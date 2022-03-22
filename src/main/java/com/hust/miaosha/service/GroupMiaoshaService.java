@@ -137,10 +137,12 @@ public class GroupMiaoshaService {
         orderInfo.setGoodsPrice(goods.getMiaoshaPrice()*goods.getDiscount());
 //        System.out.println(orderInfo.getGoodsPrice());
 
-        orderInfo.setOrderChannel(1);
+        orderInfo.setOrderChannel(2);
         orderInfo.setStatus(0);
         orderInfo.setUserId(user.getId());
+
         orderInfo.setGoodsImg(goods.getGoodsImg());
+        orderInfo.setAddress(user.getAddress());
 
 
         long orderId = orderDao.insertOrder(orderInfo);
