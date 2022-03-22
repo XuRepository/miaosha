@@ -140,6 +140,8 @@ public class GroupMiaoshaService {
         orderInfo.setOrderChannel(1);
         orderInfo.setStatus(0);
         orderInfo.setUserId(user.getId());
+        orderInfo.setGoodsImg(goods.getGoodsImg());
+
 
         long orderId = orderDao.insertOrder(orderInfo);
 

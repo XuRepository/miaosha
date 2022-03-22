@@ -7,6 +7,7 @@ import com.hust.miaosha.redis.keyPrefix.UserKey;
 import com.hust.miaosha.result.CodeMsg;
 import com.hust.miaosha.result.Result;
 import com.hust.miaosha.service.UserService;
+import com.hust.miaosha.util.UserUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,4 +101,16 @@ public class DemoController {
 		return Result.success(res);
 
 	}
+
+	@RequestMapping("/createUser")
+	@ResponseBody
+	public Result<Boolean> createUser() throws Exception {
+
+		UserUtil.createUser(10000);
+
+		return Result.success(true);
+
+	}
+
+
 }

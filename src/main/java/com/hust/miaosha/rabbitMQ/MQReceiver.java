@@ -48,6 +48,7 @@ public class MQReceiver {
 
         //这里访问了MYSQL
         GoodsVo goods = goodsService.getGoodsVoByGoodsId(goodsId);
+        System.out.println(goods.toString());
         int stock = goods.getStockCount();
         if(stock <= 0) {
             return;

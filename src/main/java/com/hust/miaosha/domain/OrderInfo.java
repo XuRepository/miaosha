@@ -14,6 +14,8 @@ public class OrderInfo {
 	private Integer status;
 	private Date createDate;
 	private Date payDate;
+	private String goodsImg;
+
 	public Long getId() {
 		return id;
 	}
@@ -79,5 +81,13 @@ public class OrderInfo {
 	}
 	public void setPayDate(Date payDate) {
 		this.payDate = payDate;
+	}
+
+	public String getGoodsImg() {
+		return goodsImg;
+	}
+
+	public void setGoodsImg(String goodsImg) {
+		this.goodsImg = goodsImg;
 	}
 }

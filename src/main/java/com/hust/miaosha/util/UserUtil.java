@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class UserUtil {
 	
-	private static void createUser(int count) throws Exception{
+	public static void createUser(int count) throws Exception{
 		List<MiaoshaUser> users = new ArrayList<MiaoshaUser>(count);
 		//生成用户
 		for(int i=0;i<count;i++) {
@@ -53,7 +53,7 @@ public class UserUtil {
 		System.out.println("insert to db");
 		//登录，生成token
 		String urlString = "http://localhost:8080/login/do_login";
-		File file = new File("D:\\tokens.txt");
+		File file = new File("/home/ubuntu/miaosha/miaosha.txt");
 		if(file.exists()) {
 			file.delete();
 		}

@@ -20,6 +20,7 @@ public class GoodsVo extends Goods {
 
 
 
+
     public Integer getStockCount() {
         return stockCount;
     }
@@ -48,5 +49,20 @@ public class GoodsVo extends Goods {
 
     public void setDiscount(double discount) {
         this.discount = discount;
+    }
+
+    public void setMiaoshaPrice(Double miaoshaPrice) {
+        this.miaoshaPrice = miaoshaPrice;
+    }
+
+    @Override
+    public String toString() {
+        return "GoodsVo{" +
+                "miaoshaPrice=" + miaoshaPrice +
+                ", stockCount=" + stockCount +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", discount=" + discount +
+                "} " + super.toString();
     }
 }

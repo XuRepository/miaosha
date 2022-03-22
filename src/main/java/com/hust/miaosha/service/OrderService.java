@@ -56,6 +56,8 @@ public class OrderService {
         orderInfo.setOrderChannel(1);
         orderInfo.setStatus(0);
         orderInfo.setUserId(user.getId());
+        orderInfo.setGoodsImg(goods.getGoodsImg());
+
 
         orderDao.insertOrder(orderInfo);
 
@@ -112,6 +114,7 @@ public class OrderService {
      * @return
      */
     public List<OrderInfo> getOrderListByUid(Long userId) {
+
 
         return orderDao.getOrderListByUid(userId);
 
