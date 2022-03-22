@@ -56,7 +56,9 @@ public class OrderService {
         orderInfo.setOrderChannel(1);
         orderInfo.setStatus(0);
         orderInfo.setUserId(user.getId());
+
         orderInfo.setGoodsImg(goods.getGoodsImg());
+        orderInfo.setAddress(user.getAddress());
 
 
         orderDao.insertOrder(orderInfo);

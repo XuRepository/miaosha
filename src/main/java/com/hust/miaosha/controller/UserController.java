@@ -5,6 +5,7 @@ import com.hust.miaosha.domain.OrderInfo;
 import com.hust.miaosha.redis.RedisService;
 import com.hust.miaosha.result.CodeMsg;
 import com.hust.miaosha.result.Result;
+import com.hust.miaosha.service.MiaoshaService;
 import com.hust.miaosha.service.MiaoshaUserService;
 import com.hust.miaosha.service.OrderService;
 import com.hust.miaosha.vo.UserVo;
@@ -35,10 +36,18 @@ public class UserController {
     @Autowired
     OrderService orderService;
 
+
+    @Autowired
+    MiaoshaUserService miaoshaUserService;
+
     @RequestMapping("/info")
     @ResponseBody
     public Result<MiaoshaUser> info(Model model, MiaoshaUser user) {
-        return Result.success(user);
+
+        MiaoshaUser user1 = miaoshaUserService.getById_1(user.getId());
+        if (user1==null) return Result.error(CodeMsg.SERVER_ERROR);
+
+        return Result.success(user1);
     }
 
     /**

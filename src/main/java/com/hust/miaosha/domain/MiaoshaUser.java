@@ -13,6 +13,16 @@ public class MiaoshaUser {
     private Integer loginCount;
     private Long groupId;
 
+    private String address;
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     public Long getGroupId() {
         return groupId;
     }

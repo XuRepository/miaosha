@@ -16,6 +16,16 @@ public class OrderInfo {
 	private Date payDate;
 	private String goodsImg;
 
+	private String address;
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
 	public Long getId() {
 		return id;
 	}

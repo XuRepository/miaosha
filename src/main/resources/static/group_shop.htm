@@ -299,21 +299,25 @@
 		</nav>
 
 <!--		<button class="btn btn-primary btn-block" type="button" id="buyButton"onclick="doMiaosha()">立即秒杀</button>-->
-		<td>
-			<button class="btn btn-primary btn-block" type="button" onclick="toTeam()">查看我的队伍</button>
-			<button class="btn btn-primary btn-block" type="button" onclick="createGroup()">创建队伍</button>
+		<div style="text-align: right">
+<!--			<div style="display:inline-block;">-->
+				<button class="btn btn-primary " type="button" onclick="toTeam()" style="width: 200px">查看我的队伍</button>
+				<button class="btn btn-primary " type="button" onclick="createGroup()" style="width: 200px">创建队伍</button>
+
+					<input type="text" id="groupidInput"  placeholder="队伍id" required style="width: 200px">
+					<button type="submit" class="btn btn-primary" onclick="joinGroup()" >加入队伍</button>
+
+					<!--				<label for="idInput">队伍id</label>-->
+
+<!--			</div>-->
+
 <!--			<button class="btn btn-primary btn-block" type="button" onclick="joinGroup()">加入队伍</button>-->
 <!--			<form class="subscribe-form form-inline justify-content-center">-->
 <!--				<input type="text" class="form-control form-control-lg subscribe-form__input" id="groupId" placeholder="队伍id">-->
 <!--				<button type="submit" class="btn btn-primary btn-lg subscribe-form__btn" onclick="joinGroup()">加入队伍</button>-->
 <!--			</form>-->
-			<div class="form-label-group">
-				<input type="text" id="groupidInput" class="form-control" placeholder="队伍id" required>
-				<button type="submit" class="btn btn-primary btn-lg subscribe-form__btn" onclick="joinGroup()">加入队伍</button>
 
-				<!--				<label for="idInput">队伍id</label>-->
-			</div>
-		</td>
+		</div>
 
 
 

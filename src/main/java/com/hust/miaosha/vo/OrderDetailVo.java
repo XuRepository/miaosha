@@ -1,5 +1,6 @@
 package com.hust.miaosha.vo;
 
+import com.google.common.collect.Ordering;
 import com.hust.miaosha.domain.OrderInfo;
 
 /**
@@ -8,7 +9,7 @@ import com.hust.miaosha.domain.OrderInfo;
  * @author: XuJY
  * @create: 2022-03-03 19:52
  **/
-public class OrderDetailVo {
+public class OrderDetailVo  {
 
     private GoodsVo goods;
     private OrderInfo order;
