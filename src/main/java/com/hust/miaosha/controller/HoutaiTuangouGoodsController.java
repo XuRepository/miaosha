@@ -40,8 +40,8 @@ public class HoutaiTuangouGoodsController {
 
     @RequestMapping("/query")
     @ResponseBody
-    public Result<List<GoodsVo>> list(Model model,MiaoshaUser user) {
-        model.addAttribute("user", user);
+    public Result<List<GoodsVo>> list(Model model) {
+//        model.addAttribute("user", user);
         List<GoodsVo> goodsList = goodsService.listGoodsVo();
         model.addAttribute("goodsList", goodsList);
         return Result.success(goodsList);

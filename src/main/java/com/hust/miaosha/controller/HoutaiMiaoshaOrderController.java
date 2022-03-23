@@ -42,8 +42,8 @@ public class HoutaiMiaoshaOrderController {
     GoodsService goodsService;
     @RequestMapping("/query")
     @ResponseBody
-    public Result<List<HoutaiOrdersVo>> infoAll(Model model,MiaoshaUser user) {
-        model.addAttribute("user", user);
+    public Result<List<HoutaiOrdersVo>> infoAll(Model model) {
+//        model.addAttribute("user", user);
         List<HoutaiOrdersVo> houtaiOrdersVoList = houtaiOrderSerivice.queryOrders();
 //        System.out.println(redisService.get(OrderKey.getMiaoshaOrderByUidGid, ""  + "_" , MiaoshaOrder.class));
         model.addAttribute("houtaiOrdersVoList", houtaiOrdersVoList);

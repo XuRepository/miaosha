@@ -15,11 +15,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 
 /**
- * @program: miaosha1
- * @description:
- * @author: XuJY
- * @create: 2022-03-01 00:09
- **/
+ * @Description
+ * @Author shucheng
+ * @Version V1.0.0
+ * @Since 1.0
+ * @Date 2022/3/22
+ */
 @Controller
 @RequestMapping("/houtaiGroup")
 public class HoutaiGroupController {
@@ -34,7 +35,7 @@ public class HoutaiGroupController {
 
     @RequestMapping("/query")
     @ResponseBody
-    public Result<List<Group>> info(Model model, MiaoshaUser user) {
+    public Result<List<Group>> info(Model model) {
         List<Group> groups = houtaiGroupService.queryAll();
         return Result.success(groups);
     }

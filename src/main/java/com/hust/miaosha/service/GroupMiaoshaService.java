@@ -116,13 +116,13 @@ public class GroupMiaoshaService {
 
     }
 
-    /**
-     * 创建订单，先更新数据库，再写缓存
-     *
-     * @param user
-     * @param goods
-     * @return
-     */
+/**
+ * 创建订单，先更新数据库，再写缓存
+ *
+ * @param user
+ * @param goods
+ * @return
+ */
     @Transactional
     public OrderInfo createOrder(MiaoshaUser user, GoodsVo goods) {
 
@@ -144,12 +144,11 @@ public class GroupMiaoshaService {
         orderInfo.setGoodsImg(goods.getGoodsImg());
         orderInfo.setAddress(user.getAddress());
 
-
-        long orderId = orderDao.insertOrder(orderInfo);
+        orderDao.insertOrder(orderInfo);
 
         GroupOrder groupOrder = new GroupOrder();
         groupOrder.setGoodsId(goods.getId());
-        groupOrder.setOrderId(orderId);
+        groupOrder.setOrderId(orderInfo.getId());
         groupOrder.setUserId(user.getId());
         orderDao.insertTuangouOrder(groupOrder);
 
@@ -157,7 +156,6 @@ public class GroupMiaoshaService {
 
         return orderInfo;
     }
-
     @Transactional
     public OrderInfo miaosha(MiaoshaUser user, GoodsVo goods) {
         //减库存 下订单 写入秒杀订单

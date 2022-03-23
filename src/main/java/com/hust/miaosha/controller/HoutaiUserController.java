@@ -34,11 +34,11 @@ public class HoutaiUserController {
     @Autowired
     RedisService redisService;
 
-    @RequestMapping("/info")
-    @ResponseBody
-    public Result<MiaoshaUser> info(Model model, MiaoshaUser user) {
-        return Result.success(user);
-    }
+//    @RequestMapping("/info")
+//    @ResponseBody
+//    public Result<MiaoshaUser> info(Model model, MiaoshaUser user) {
+//        return Result.success(user);
+//    }
 
 
     /**
@@ -94,8 +94,8 @@ public class HoutaiUserController {
     }
     @RequestMapping(value="/query")
     @ResponseBody
-    public List<MiaoshaUser> list(Model model, MiaoshaUser user) {
-        model.addAttribute("user", user);
+    public List<MiaoshaUser> list(Model model) {
+
         List<MiaoshaUser> userList = houtaiUserService.query();
         model.addAttribute("userList", userList);
         return userList;
