@@ -1,12 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
 
-	<title>订单详情</title>
+	<title>Contact</title>
 
 	<!-- Fonts -->
 	<link rel="stylesheet" href="assets/fonts/Lato/Lato.css">
@@ -39,60 +39,9 @@
 	<!-- common.js -->
 	<script type="text/javascript" src="/js/common.js"></script>
 
-	<script>
-
-		function render(detail){
-			var goods = detail.goods;
-			var order = detail.order;
-			$("#goodsName").text(goods.goodsName);
-			$("#goodsImg").attr("src", goods.goodsImg);
-			$("#orderPrice").text(order.goodsPrice);
-			$("#address").text(order.address);
-			$("#mobile").text(order.userId);
-			$("#createDate").text(new Date(order.createDate).format("yyyy-MM-dd hh:mm:ss"));
-			var status = "";
-			if(order.status == 0){
-				status = "未支付"
-			}else if(order.status == 1){
-				status = "待发货";
-			}
-			$("#orderStatus").text(status);
-
-		}
-
-		$(function(){
-			getOrderDetail();
-		})
-
-		function getOrderDetail(){
-			var orderId = g_getQueryString("orderId");
-			$.ajax({
-				url:"/order/detail",
-				type:"GET",
-				data:{
-					orderId:orderId
-				},
-				success:function(data){
-					if(data.code == 0){
-						render(data.data);
-					}else{
-						layer.msg(data.msg);
-					}
-				},
-				error:function(){
-					layer.msg("客户端请求有误");
-				}
-			});
-		}
-
-	</script>
-
 </head>
 
-
 <body>
-
-
 	<div class="head-line"></div>
 
 	<header class="page-header">
@@ -109,11 +58,21 @@
 				</div>
 
 				<div class="logo col-lg-4">
-					<a href="index.htm"><img src="img/logo3.png" alt=""></a>
+					<a href="index.html"><img src="img/logo3.png" alt=""></a>
 				</div>
 
 				<div class="quick-access-menu col-lg-4">
+<!--					<div class="quick-access__item">-->
+<!--						<div class="select-currency">-->
+<!--							<select class="select-style js-select2">-->
+<!--								<option value="usd">USD</option>-->
+<!--								<option value="eur">EUR</option>-->
+<!--								<option value="gbr">GBR</option>-->
+<!--							</select>-->
+<!--						</div>-->
+<!--					</div>-->
 					<div class="quick-access__item quick-access__item_border-r">
+<!--						<a href="#"><span class="account"><i class="flaticon-messenger-user-avatar fi-2x"></i></span></a>-->
 						<a href="/userCenter.htm">
 							<i class="flaticon-messenger-user-avatar fi-2x"></i>
 							<span class="account">个人中心</span>
@@ -125,7 +84,6 @@
 								<i class="cart__icon flaticon-online-shopping-cart fi-2x"></i>
 								<span class="mini-cart-link__qty">订单</span>
 							</a>
-
 						</div>
 					</div>
 				</div><!-- end of quick-access-menu -->
@@ -142,7 +100,7 @@
 						<a class="nav-link" href="index.htm">主页&nbsp;</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link active" href="shop.htm">秒杀</a>
+						<a class="nav-link" href="shop.htm">秒杀</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link active" href="group_shop.htm">组团秒杀</a>
@@ -152,112 +110,102 @@
 					</li>
 				</ul>
 			</nav>
-		</div>
-	</header>
-
-	<div class="page-wrap cart shop">
-		<!-- Breadcrumbs -->
-		<nav aria-label="breadcrumb" class="page-breadcrumb">
-			<div class="container">
-				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a href="/">主页</a></li>
-					<li class="breadcrumb-item active" aria-current="page">个人中心</li>
-				</ol>
-			</div>
-		</nav>
-
-		<div class="page-content">
-			<main class="main-content">
-				<div class="container">
-					<h1 class="page-title h3 text-center">订单详情</h1>
-<!--					<button type="button" class="btn btn-primary mr-1 mb-3" onclick="changeUser()">修改个人信息</button>-->
-<!--					<button type="button" class="btn btn-primary mr-1 mb-3" onclick="changeUser()">修改密码</button>-->
-
-					<div class="panel panel-default" >
-						<div class="panel-heading">秒杀订单详情</div>
-						<table class="table" id="goodslist">
-							<tr>
-								<td>商品名称</td>
-								<td colspan="3" id="goodsName"></td>
-							</tr>
-							<tr>
-								<td>商品图片</td>
-								<td colspan="2"><img  id="goodsImg" width="200" height="200" /></td>
-							</tr>
-							<tr>
-								<td>订单价格</td>
-								<td colspan="2"  id="orderPrice"></td>
-							</tr>
-							<tr>
-								<td>下单时间</td>
-								<td id="createDate" colspan="2"></td>
-							</tr>
-							<tr>
-								<td>订单状态</td>
-								<td id="orderStatus">
-								</td>
-								<td>
-									<button class="btn btn-primary btn-block" type="submit" id="payButton">立即支付</button>
-								</td>
-							</tr>
-							<tr>
-								<td>收货人</td>
-								<td colspan="2" id="mobile"></td>
-							</tr>
-							<tr>
-								<td>收货地址</td>
-								<td colspan="2" id="address"></td>
-							</tr>
-						</table>
-					</div>
-
-<!--					<div class="row justify-content-between">-->
-<!--						<div class="col-lg-3">-->
-<!--							<h3 class="simple-heading mb-4">订单总额</h3>-->
-
-<!--							<form action="/" class="calc-shipping">-->
-<!--								<div class="form-group">-->
-<!--									<select class="form-control js-select2" data-placeholder="Choose country">-->
-<!--										<option value="">选择 国家</option> &lt;!&ndash; Require for select placeholder &ndash;&gt;-->
-<!--										<option value="Canada">加拿大</option>-->
-<!--										<option value="China">中国</option>-->
-<!--										<option value="Ukraine">英国</option>-->
-<!--										<option value="USA">美国</option>-->
-<!--									</select>-->
-<!--								</div>-->
-<!--								<div class="form-group">-->
-<!--									<select class="form-control js-select2" data-placeholder="Select state">-->
-<!--										<option value="">选择省份</option> &lt;!&ndash; Require for select placeholder &ndash;&gt;-->
-<!--										<option value="Arizona">湖北</option>-->
-<!--										<option value="California">广东</option>-->
-<!--									</select>-->
-<!--								</div>-->
-<!--								<div class="form-group">-->
-<!--									<input type="text" class="form-control" placeholder="Zip / Postal code">-->
-<!--								</div>-->
-<!--								<div class="form-submit">-->
-<!--									<input type="submit" class="btn btn-outline-primary btn-block" name="update_cart" value="Calculate" />-->
-<!--								</div>-->
-<!--							</form>-->
-<!--						</div>-->
-
-<!--						<div class="col-lg-6 cart-total">-->
-<!--							<div class="cart-subtotal d-flex justify-content-between align-items-center">-->
-<!--								<span>总计</span>-->
-<!--								<span>¥6556.00</span>-->
-<!--							</div>-->
-
-<!--							<div class="cart-total__btns text-lg-right">-->
-<!--								<button class="btn btn-outline-primary btn-lg cart-update-btn">更新&nbsp;</button>-->
-<!--								<a href="checkout.html" class="btn btn-primary btn-lg cart-checkout-btn">确认下单</a>-->
-<!--							</div>-->
-<!--						</div>-->
-<!--					</div>-->
-
-				</div>
-			</main>
+		</div><div class="shop-categories-nav">
+		<div class="container">
+			<ul class="nav justify-content-between">
+				<li class="nav-item"><a href="shop.htm" class="nav-link active">全部&nbsp;</a></li>
+				<li class="nav-item"><a href="shop.htm" class="nav-link">纪念品</a></li>
+				<li class="nav-item"><a href="shop.htm" class="nav-link">生活用品</a></li>
+				<li class="nav-item"><a href="shop.htm" class="nav-link">美食</a></li>
+				<li class="nav-item"><a href="shop.htm" class="nav-link">衣服</a></li>
+				<li class="nav-item"><a href="shop.htm" class="nav-link">鞋子</a></li>
+				<li class="nav-item"><a href="shop.htm" class="nav-link">美妆</a></li>
+				<li class="nav-item"><a href="shop.htm" class="nav-link">秒杀区</a></li>
+			</ul>
 		</div>
 	</div>
+	</header>
+
+	<div class="page-wrap">
+		<!-- Breadcrumbs -->
+<!--		<nav aria-label="breadcrumb" class="page-breadcrumb">-->
+<!--			<div class="container">-->
+<!--				<ol class="breadcrumb">-->
+<!--					<li class="breadcrumb-item"><a href="/">主页</a></li>-->
+<!--					<li class="breadcrumb-item active" aria-current="page">联系我们</li>-->
+<!--				</ol>-->
+<!--			</div>-->
+<!--		</nav>-->
+
+		<!-- Page content -->
+		<div class="page-content">
+			<section class="section-contact-map">
+				<div class="container">
+
+						<div class="alert alert-info" style="text-align: center">
+							<strong>华中科技大学软件学院软件项目实训7组</strong>
+						</div>
+						<div  style="text-align: center">
+<!--							<p><strong>华中科技大学软件学院<br />软件项目实训7组</strong></p>-->
+							 <p><i class="mdi mdi-account"></i>徐军扬
+								 <i class="mdi mdi-account"></i>郭永强
+									 <i class="mdi mdi-account"></i>龙千
+										 <i class="mdi mdi-account"></i>舒成</p>
+<!--							<p><a href="mailto:XXX">XXX</a><br />-->
+<!--								XXX-->
+<!--							</p>-->
+						</div>
+
+<!--						<div class="map col-lg-9">-->
+<!--							<div id="google-map"></div>-->
+<!--						</div>-->
+
+							<div class="row ">
+								<div class="col-lg-6 col-md-8 text-center">
+									<iframe style="text-align: right" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3437.318978348687!2d114.43161176768176!3d30.512018211759425!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x342ea35967f23167%3A0x4d301d48b26ea30a!2z5Y2O5Lit56eR5oqA5aSn5a2m6L2v5Lu25a2m6Zmi!5e0!3m2!1szh-CN!2s!4v1648041357235!5m2!1szh-CN!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+								</div>
+
+								<div class="col-lg-6 col-md-8 text-center">
+									<h2 class="h3 mb-40">联系我们</h2>
+
+									<form class="contact-form">
+										<div class="form-row">
+											<div class="form-group col-md-6">
+												<input type="text" class="form-control" placeholder="姓">
+											</div>
+											<div class="form-group col-md-6">
+												<input type="text" class="form-control" placeholder="名">
+
+											</div>
+										</div>
+
+										<div class="form-row">
+											<div class="form-group col-md-6">
+												<input type="text" class="form-control" placeholder="邮箱地址">
+											</div>
+											<div class="form-group col-md-6">
+												<input type="text" class="form-control" placeholder="手机号">
+											</div>
+										</div>
+
+										<div class="form-group">
+											<textarea rows="5" class="form-control" placeholder="内容"></textarea>
+										</div>
+
+										<div class="form-submit mt-3">
+											<input type="submit" class="btn btn-primary btn-lg btn-block" value="发送" />
+										</div>
+									</form>
+								</div>
+							</div>
+				</div>
+			</section>
+
+			<section class="section-contact-form">
+
+			</section>
+		</div> <!-- /.page-content -->
+	</div> <!-- /.page-wrap -->
 
 	<footer class="page-footer">
 		<div class="container">
@@ -285,10 +233,10 @@
 			<nav class="footer-navigation">
 				<ul class="nav justify-content-center">
 					<li class="nav-item">
-						<a class="nav-link" href="index.htm">Home</a>
+						<a class="nav-link" href="index.html">Home</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="../templates/shop_old.htm">Shop</a>
+						<a class="nav-link" href="shop.html">Shop</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="promo.html">Promo</a>
@@ -320,16 +268,17 @@
 	<div class="full-search-wrap">
 		<div class="full-search container">
 			<div class="close-s float-right js-close-search flaticon-cancel-button fi-2x"></div>
-			<form action="/" class=" search-full-form">
+			<form action="/" class="search-full-form">
 				<div class="position-relative">
 					<i class="search-icon flaticon-magnifying-glass-browser fi-2x"></i>
-					<input type="text" id="s-full" class="search-full-form__input" placeholder="Search">
+					<input type="text" id="s-full" class="search-full-form__input" placeholder="搜索">
 					<input type="submit" class="d-none">
 				</div>
 				<p class="hint">Type in your search and press enter</p>
 			</form>
 		</div>
 	</div>
+
 	<!-- Libs -->
 	<script src="libs/jquery-2.2.3.min.js"></script>
 	<script src="libs/bootstrap-4.3.1/js/bootstrap.min.js"></script>
@@ -337,6 +286,9 @@
 	<script src="libs/slick/slick.min.js"></script>
 
 	<!-- Theme -->
+<!--	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjprc-1BZ4ft8yC81jNUAdtCkSByqP-DY"></script>-->
 	<script src="assets/js/custom.js"></script>
+
+
 </body>
 </html>
