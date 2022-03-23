@@ -1,0 +1,98 @@
+<!DOCTYPE HTML>
+<html >
+<head>
+    <title>注册</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <!-- jquery -->
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <!-- bootstrap -->
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="bootstrap/css/floating-labels.css" rel="stylesheet">
+
+    <!-- jquery-validator -->
+    <script type="text/javascript" src=bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="jquery-validation/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="jquery-validation/localization/messages_zh.min.js"></script>
+    <!-- layer -->
+    <script type="text/javascript" src="layer/layer.js"></script>
+    <!-- md5.js -->
+    <script type="text/javascript" src="js/md5.min.js"></script>
+    <!-- common.js -->
+    <script type="text/javascript" src="js/common.js"></script>
+</head>
+
+<body>
+
+<form class="form-signin" id="loginForm">
+    <div class="text-center mb-4">
+        <img class="mb-4" src="img/logo.png" alt="" width="128" height="128">
+        <h1 class="h3 mb-3 font-weight-normal">创建你的队伍，开启组团秒杀之旅</h1>
+    </div>
+
+
+
+    <div class="form-label-group">
+        <input type="text" id="nicknameInput"  class="form-control" placeholder="用户名" required autofocus>
+        <label for="nicknameInput">用户名</label>
+    </div>
+
+    <div class="form-label-group">
+        <input type="password" id="passwordInput" class="form-control" placeholder="密码" required>
+        <label for="passwordInput">密码</label>
+    </div>
+
+    <div class="form-label-group">
+        <input type="text" id="idInput" class="form-control" placeholder="手机号" required>
+        <label for="idInput">手机号</label>
+    </div>
+
+    <!--    <div id="warnInfo" class="alert alert-danger" role="alert"></div>-->
+
+    <a class="btn btn-lg btn-primary btn-block" onclick="login()">注册</a>
+</form>
+
+
+<!--<div class="panel panel-default" >-->
+
+<!--    username:<input id="nicknameInput">-->
+<!--    password:<input id="passwordInput">-->
+<!--    id:<input id="idInput">-->
+<!--    <button onclick="login()">注册</button>-->
+<!--</div>-->
+</body>
+
+<script>
+
+    function login() {
+        var nickname = $('#nicknameInput').val();
+        var password = $('#passwordInput').val();
+        var id = $('#idInput').val();
+        console.log('login name is ' + nickname)
+        console.log('login password is ' + password)
+
+        $.ajax({
+            type: "POST",
+            url: "/login/register",
+            dataType: "json",
+            data: {
+                nickname: nickname,
+                password: password,
+                id: id,
+            },
+            success: function (data) {
+                alert("注册成功");
+                // alert(data.status);
+                window.location.href="http://localhost:8080/login/to_login";
+            },
+            error: function (jqXHR) {
+                alert("发生错误：" + jqXHR.status);
+            }
+        });
+    }
+
+</script>
+</html>

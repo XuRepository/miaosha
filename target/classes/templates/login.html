@@ -1,0 +1,110 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>登录</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- thymeleaf 引入静态js的方式: @{static_js_path} -->
+
+    <!-- jquery -->
+    <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+    <!-- bootstrap -->
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap.min.css}"/>
+    <script type="text/javascript" th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+    <link th:href="@{/bootstrap/css/floating-labels.css}" rel="stylesheet" />
+    <!-- jquery-validator -->
+    <script type="text/javascript" th:src="@{/jquery-validation/jquery.validate.min.js}"></script>
+    <script type="text/javascript" th:src="@{/jquery-validation/localization/messages_zh.min.js}"></script>
+    <!-- layer -->
+    <script type="text/javascript" th:src="@{/layer/layer.js}"></script>
+    <!-- md5.js -->
+    <script type="text/javascript" th:src="@{/js/md5.min.js}"></script>
+    <!-- common.js -->
+    <script type="text/javascript" th:src="@{/js/common.js}"></script>
+
+</head>
+<body>
+
+<!-- style="width:50%; margin:0 auto" 宽度设置为屏幕的50%, 居中 -->
+<form name="loginForm" id="loginForm" method="post" >
+
+    <div class="text-center mb-4">
+        <img class="mb-4" src="/img/logo.png" alt="" width="128" height="128" />
+        <h1 class="h3 mb-3 font-weight-normal">欢迎登录华中大秒杀系统</h1>
+    </div>
+
+    <div class="form-label-group">
+            <input id="mobile" name="mobile" class="form-control" type="text" placeholder="手机号码" required="true"
+                       minlength="11" maxlength="11" autofocus="true" />
+            <label for="mobile">请输入手机号码</label>
+<!--            <div class="col-md-1">-->
+<!--            </div>-->
+    </div>
+
+    <div class="form-label-group">
+
+
+        <input id="password" name="password" class="form-control" type="password" placeholder="密码"
+                       required="true" minlength="6" maxlength="16" />
+        <label for="password">请输入密码</label>
+
+    </div>
+
+    <div class="form-label-group">
+        <button class="btn btn-lg btn-primary btn-block" type="reset" onclick="reset()">重置</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" onclick="login()">登录</button>
+        <a class="btn btn-lg btn-primary btn-block" onclick="window.location.href='/register1.htm'">注册</a>
+
+<!--            <button class="btn btn-primary btn-block" type="reset" onclick="reset()">重置</button>-->
+
+<!--            <button class="btn btn-primary btn-block" type="submit" onclick="login()">登录</button>-->
+
+<!--            <button class="btn btn-primary btn-block" onclick="window.location.href='/register1.htm'">注册</button>-->
+
+    </div>
+<!--    <td><a th:href="'/register1.htm'">注册</a></td>-->
+
+</form>
+</body>
+<script>
+    function login() {
+        $("#loginForm").validate({
+            submitHandler: function (form) {
+                doLogin();
+            }
+        });
+    }
+
+    function doLogin() {
+        g_showLoading();
+
+        var inputPass = $("#password").val();
+        var salt = g_passsword_salt;
+        var str = "" + salt.charAt(0) + salt.charAt(2) + inputPass + salt.charAt(5) + salt.charAt(4);
+        var password = md5(str);
+
+        // 发送 ajax 异步请求
+        $.ajax({
+            url: "/login/do_login",
+            type: "POST",
+            data: {
+                mobile: $("#mobile").val(),
+                password: password
+            },
+            success: function (data) {                              // 成功时的回调
+                layer.closeAll();
+                console.log(data)
+                if (data.code == 0) {
+                    layer.msg("成功");
+                    window.location.href = "/index.htm";
+                } else {
+                    layer.msg(data.msg);
+                }
+            },
+            error: function () {                                    // 失败时的回调
+                layer.closeAll();
+            }
+        });
+    }
+</script>
+</html>

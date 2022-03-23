@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
+
+	<title>Shop</title>
+
+	<!-- Fonts -->
+	<link rel="stylesheet" href="assets/fonts/Lato/Lato.css">
+
+	<!-- Icons -->
+	<link rel="stylesheet" href="assets/fonts/flaticon/flaticon.css">
+	<link rel="stylesheet" href="assets/fonts/webfont/css/materialdesignicons.min.css">
+
+	<!-- Libs -->
+	<link rel="stylesheet" href="libs/bootstrap-4.3.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="libs/select2/css/select2.min.css">
+	<link rel="stylesheet" href="libs/slick/slick.css">
+
+	<!-- Theme -->
+	<link rel="stylesheet" href="assets/css/style.css">
+	<meta name="theme-color" content="#ECECEC">
+
+	<!-- jquery -->
+	<script type="text/javascript" src="/js/jquery.min.js"></script>
+	<!-- bootstrap -->
+	<link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css" />
+	<script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+	<!-- jquery-validator -->
+	<script type="text/javascript" src="/jquery-validation/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="/jquery-validation/localization/messages_zh.min.js"></script>
+	<!-- layer -->
+	<script type="text/javascript" src="/layer/layer.js"></script>
+	<!-- md5.js -->
+	<script type="text/javascript" src="/js/md5.min.js"></script>
+	<!-- common.js -->
+	<script type="text/javascript" src="/js/common.js"></script>
+
+	<script>
+		var data=[];
+		function reqListener () {
+			console.log(this.responseText);
+			data=JSON.parse(this.responseText);
+			var _ul=document.getElementById("addProduct");
+			console.log('data',data)
+			for(var i=0;i<data.length;i++)
+			{
+				var _li=document.createElement("li")
+				_li.className="product";
+				var _div1=document.createElement("div")
+				_div1.className="product-thumb";
+				var _a=document.createElement("a");
+				_a.className="product-thumb__link";
+			// <td><a th:href="'/goods_detail.htm?goodsId='+${goods.id}">详情</a></td>
+				var goodsid= data[i].id;
+				// _a.href="/goods_detail.htm?goodsId="+goodsid;     //商品详情链接
+				_a.href="/group-product.htm?goodsId="+goodsid;     //商品详情链接
+				var _img=document.createElement("img");
+				_img.src=data[i].goodsImg;           //图片路径
+				_a.appendChild(_img);
+				_div1.appendChild(_a);
+				var _div2=document.createElement("div")
+				_div2.className="product-detail";
+				_div2.innerHTML=data[i].startDate   //商品秒杀开始时间
+				var _div3=document.createElement("div")
+				_div3.className="product-detail";
+				_div3.innerHTML=data[i].endDate //商品秒杀结束时间
+				var _div4=document.createElement("div")
+				_div4.className="product-title";
+				_div4.innerHTML=data[i].goodsName  //商品名称
+				var _div5=document.createElement("div")
+				_div5.className="price";
+				var _spanIns=document.createElement("span");
+				_spanIns.className="amount";
+				var _ins=document.createElement("ins");
+				_spanIns.innerHTML=data[i].miaoshaPrice    //添加秒杀价格
+				_ins.appendChild(_spanIns);
+				var _del=document.createElement("del");
+				_spanIns.innerHTML=data[i].goodsPrice  //添加商品原价
+				//var _spanDel=document.createElement("span");
+				_del.appendChild(_spanIns);
+				var _span=document.createElement("span");
+				_span.innerHTML=data[i].stockCount  //添加商品库存量
+				//添加商品价格类标签
+				_div5.appendChild(_span);
+				_div5.appendChild(_del);
+				_div5.appendChild(_ins);
+				_li.appendChild(_div5);
+				_li.appendChild(_div4);
+				_li.appendChild(_div3);
+				_li.appendChild(_div2);
+				_li.appendChild(_div1);
+				_ul.appendChild(_li);
+			}
+		}
+		var oReq = new XMLHttpRequest();
+		oReq.addEventListener("load", reqListener);
+		oReq.open("GET", "/groupMiaosha/to_list");
+		oReq.send();
+
+		function createGroup(){
+			$.ajax({
+				url:"/groupMiaosha/createGroup",
+				type:"GET",
+				success:function(data){
+					// console.log(data);
+					if(data.code == 0){
+						alert("创建队伍成功")
+					}else{
+						// console.log(data.code);
+						alert(data.msg);
+					}
+				},
+				error:function(){
+					layer.msg("客户端请求有误");
+				}
+			});
+		}
+
+		function joinGroup(){
+			var groupId = $('#groupidInput').val();
+			console.log(groupId);
+			$.ajax({
+				url:"/groupMiaosha/joinGroup/"+groupId,
+				type:"POST",
+				data:{
+					groupId:$("#groupId").val(),
+				},
+				success:function(data){
+					if(data.code == 0){
+						alert("加入团队成功！")
+					}else{
+						alert(data.msg);
+					}
+				},
+				error:function(){
+					alert("客户端请求有误");
+				}
+			});
+		}
+
+		function toTeam() {
+			window.location.href="/team.htm";
+		}
+
+	</script>
+</head>
+<body>
+	<div class="head-line"></div>
+
+	<header class="page-header">
+		<div class="container">
+			<div class="top-bar row align-items-center">
+				<div class="search col-lg-4">
+					<div class="form-search-toggle js-open-search">
+						<i class="search-icon flaticon-magnifying-glass-browser fi-2x"></i>
+						<span>搜索</span>
+					</div>
+					<div id="js-open-mob-menu" class="mob-menu-toggle">
+						<span>Menu</span> <i class="flaticon-menu-options fi-2x"></i>
+					</div>
+				</div>
+				
+				<div class="logo col-lg-4 col-xl-1">
+			        <a href="#"><img src="images/logo.png" alt=""></a>
+				</div>
+
+				<div class="quick-access-menu col-lg-4 col-xl-7">
+					<div class="quick-access__item">
+						<div class="select-currency">
+							<select class="select-style js-select2">
+					      		<option value="usd">中文</option>
+					      		<option value="eur">英语</option>
+					      		<option value="gbr">日语</option>
+					      	</select>
+						</div>   
+					</div>
+					<div class="quick-access__item quick-access__item_border-r">
+						<a href=""><span class="account"><i class="flaticon-messenger-user-avatar fi-2x"></i></span></a>
+					</div>
+					<div class="quick-access__item">
+						<div class="header-mini-cart">
+							<a href="cart.html" class="mini-cart-link">
+								<i class="cart__icon flaticon-online-shopping-cart fi-2x"></i>
+								<span class="mini-cart-link__qty">2 商品</span>
+							</a>
+
+							<div class="mini-cart">
+							  <div class="mini-cart__header">Your cart</div>
+								<div class="mini-cart__content">
+									<ul class="mini-cart-list">
+										<li class="mini-cart-item">
+											<div class="mini-cart-item__thumb">
+												<a href="single-product.htm">
+													<img src="images/mini-cart-product-1.jpg" alt="">
+												</a>
+											</div>
+											<div class="mini-cart-item__content">
+												<div class="mini-cart-item__title"><a href="single-product.htm">玻璃吊灯</a></div>
+												<span class="amount">¥121.00</span>
+											</div>
+										</li>
+										<li class="mini-cart-item">
+											<div class="mini-cart-item__thumb">
+												<a href="single-product.htm">
+													<img src="images/mini-cart-product-2.jpg" alt="">
+												</a>
+											</div>
+											<div class="mini-cart-item__content">
+												<div class="mini-cart-item__title"><a href="single-product.htm">美度男士手表</a></div>
+												<span class="amount">¥6500.00</span>
+											</div>
+										</li>
+									</ul>
+									<div class="mini-cart__subtotal d-flex flex-wrap justify-content-between">
+										<span>Subtotal</span>
+										<span>$153.00</span>
+									</div>
+									<a href="checkout.html" class="btn btn-primary btn-lg btn-block mini-cart__btn">checkout</a>
+								</div>
+								<div class="mini-cart__footer">
+									<div class="icon-box icon-box-left justify-content-center">
+										<div class="icon-box__icon"><i class="flaticon flaticon-delivery-truck"></i></div>
+										<div class="icon-box__title">Delivery to all regions</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div><!-- end of quick-access-menu -->
+			</div> <!-- end of top-bar -->
+
+			<nav class="header-navigation">
+				<button class="mob-menu-close" id="js-close-mob-menu">
+					<span>Close</span>
+					<i class="flaticon-cancel-button"></i>
+				</button>
+
+				<ul class="nav justify-content-center">
+					<li class="nav-item">
+						<a class="nav-link" href="index.htm">主页&nbsp;</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" href="shop.htm">购物</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="promo.html">秒杀</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="about.html">其他</a>
+						<ul class="sub-menu">
+							<li class="nav-item">
+								<a class="nav-link" href="shortcodes.html">Shortcodes</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="404.html">404 Page</a>
+							</li>
+						</ul>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="blog.html">&nbsp;</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="contact.html">联系我们&nbsp;</a>
+					</li>
+				</ul>
+			</nav>
+		</div> <!-- end of container -->
+
+		<div class="shop-categories-nav">
+			<div class="container">
+				<ul class="nav justify-content-between">
+					<li class="nav-item"><a href="shop.htm" class="nav-link active">全部&nbsp;</a></li>
+					<li class="nav-item"><a href="shop.htm" class="nav-link">纪念品</a></li>
+					<li class="nav-item"><a href="shop.htm" class="nav-link">电子产品</a></li>
+					<li class="nav-item"><a href="shop.htm" class="nav-link">生活用品</a></li>
+					<li class="nav-item"><a href="shop.htm" class="nav-link">美食</a></li>
+					<li class="nav-item"><a href="shop.htm" class="nav-link">衣服</a></li>
+					<li class="nav-item"><a href="shop.htm" class="nav-link">鞋子</a></li>
+					<li class="nav-item"><a href="shop.htm" class="nav-link">美妆</a></li>
+					<li class="nav-item"><a href="shop.htm" class="nav-link">秒杀区</a></li>
+				</ul>
+			</div>
+		</div>
+	</header>
+
+	<div class="page-wrap archive shop">
+		<!-- Breadcrumbs -->
+		<nav aria-label="breadcrumb" class="page-breadcrumb">
+			<div class="container">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="/">主页</a></li>
+					<li class="breadcrumb-item active" aria-current="page">限时团购秒杀</li>
+				</ol>
+			</div>
+		</nav>
+
+<!--		<button class="btn btn-primary btn-block" type="button" id="buyButton"onclick="doMiaosha()">立即秒杀</button>-->
+		<div style="text-align: right">
+<!--			<div style="display:inline-block;">-->
+				<button class="btn btn-primary " type="button" onclick="toTeam()" style="width: 200px">查看我的队伍</button>
+				<button class="btn btn-primary " type="button" onclick="createGroup()" style="width: 200px">创建队伍</button>
+
+					<input type="text" id="groupidInput"  placeholder="队伍id" required style="width: 200px">
+					<button type="submit" class="btn btn-primary" onclick="joinGroup()" >加入队伍</button>
+
+					<!--				<label for="idInput">队伍id</label>-->
+
+<!--			</div>-->
+
+<!--			<button class="btn btn-primary btn-block" type="button" onclick="joinGroup()">加入队伍</button>-->
+<!--			<form class="subscribe-form form-inline justify-content-center">-->
+<!--				<input type="text" class="form-control form-control-lg subscribe-form__input" id="groupId" placeholder="队伍id">-->
+<!--				<button type="submit" class="btn btn-primary btn-lg subscribe-form__btn" onclick="joinGroup()">加入队伍</button>-->
+<!--			</form>-->
+
+		</div>
+
+
+
+
+<!--		<li class="nav-item">-->
+<!--			<a class="nav-link" href="team.htm">查看我的队伍信息</a>-->
+<!--			<a class="nav-link" id="createGroup">创建我的队伍</a>-->
+
+<!--		</li>-->
+
+
+
+		<div class="page-content">
+			<main class="main-content">
+				<div class="container">
+<!--					<div class="shop-controls d-flex align-items-center">-->
+<!--						<div class="shop-control">-->
+<!--							<label for="per_page" class="control-label">页码:</label>-->
+<!--							<select id="per_page" name="perpage" class="prod-per-page js-select2 select-style">-->
+<!--								<option value="12">12</option>-->
+<!--								<option value="24">24</option>-->
+<!--							</select>-->
+<!--						</div>-->
+<!--						<div class="shop-control">-->
+<!--							<label for="order_by" class="control-label">排序:</label>-->
+<!--							<select id="order_by" name="orderby" class="orderby js-select2 select-style">-->
+<!--								<option value="1">从高到低</option>-->
+<!--								<option value="1">从低到高</option>-->
+<!--							</select>-->
+<!--						</div>-->
+<!--					</div>-->
+
+					<ul class="products columns-4" id="addProduct">
+<!--					&lt;!&ndash; 	<li class="product">-->
+<!--							<div class="product-thumb">-->
+<!--							  <span class="onsale">-30%</span> -->
+<!--								<a href="single-product.htm" class="product-thumb__link">-->
+<!--								  <img src="images/02_catalogue_page_001.jpg" alt=""> -->
+<!--									<span class="btn btn-outline-light shop-link">购买</span>-->
+<!--								</a>-->
+<!--                            </div>-->
+<!--							<div class="product-detail">秒杀开始时间:3/8 18:00</div>-->
+<!--							<div class="product-detail">秒杀结束时间:3/8 19:00</div>-->
+<!--							<div class="product-title">红酒</div>-->
+<!--							<div class="price">-->
+<!--								<ins><span class="amount">¥1?0.00</span></ins>-->
+<!--								<del><span class="amount">¥178.00</span></del>-->
+<!--								<span>剩余库存</span>-->
+<!--							</div>-->
+
+<!--						</li>-->
+
+<!--						<li class="product">-->
+<!--							<div class="product-thumb">-->
+<!--								<a href="single-product.htm" class="product-thumb__link">-->
+<!--									<img src="images/02_catalogue_page_002.jpg" alt="">-->
+<!--									<span class="btn btn-outline-light shop-link">购买</span>-->
+<!--								</a>-->
+<!--							</div>-->
+<!--							<div class="product-detail"><a href="single-product.htm">秒杀开始时间:3/8 18:00</a></div>-->
+<!--							<div class="product-detail"><a href="single-product.htm">秒杀结束时间:3/8 19:00</a></div>-->
+<!--							<div class="product-title"><a href="single-product.htm">咖啡机</a></div>-->
+<!--							<div class="price">-->
+<!--								<ins><span class="amount">¥1?0.00</span></ins>-->
+<!--								<del><span class="amount">¥178.00</span></del>-->
+<!--							</div>-->
+<!--						</li>-->
+
+<!--						<li class="product">-->
+<!--							<div class="product-thumb">-->
+<!--								<a href="single-product.htm" class="product-thumb__link">-->
+<!--									<img src="images/01_home_page_007.jpg" alt="">-->
+<!--									<span class="btn btn-outline-light shop-link">购买</span>-->
+<!--								</a>-->
+<!--							</div>-->
+<!--							<div class="product-detail"><a href="single-product.htm">秒杀开始时间:3/8 18:00</a></div>-->
+<!--							<div class="product-detail"><a href="single-product.htm">秒杀结束时间:3/8 19:00</a></div>-->
+<!--							<div class="product-title"><a href="single-product.htm">木质椅子</a></div>-->
+<!--							<div class="price">-->
+<!--								<ins><span class="amount">¥?0.00</span></ins>-->
+<!--								<del><span class="amount">¥78.00</span></del>-->
+<!--							</div>-->
+<!--						</li>-->
+<!--						<li class="product">-->
+<!--							<div class="product-thumb">-->
+<!--								<a href="single-product.htm" class="product-thumb__link">-->
+<!--									<img src="images/02_catalogue_page_004.jpg" alt="">-->
+<!--									<span class="btn btn-outline-light shop-link">购买</span>-->
+<!--								</a>-->
+<!--							</div>-->
+<!--							<div class="product-detail"><a href="single-product.htm">秒杀开始时间:3/8 18:00</a></div>-->
+<!--							<div class="product-detail"><a href="single-product.htm">秒杀结束时间:3/8 19:00</a></div>-->
+<!--							<div class="product-title"><a href="single-product.htm">枕头</a></div>-->
+<!--							<div class="price">-->
+<!--								<ins><span class="amount">¥?0.00</span></ins>-->
+<!--								<del><span class="amount">¥58.00</span></del>-->
+<!--							</div>-->
+<!--						</li>-->
+
+<!--						<li class="product">-->
+<!--							<div class="product-thumb">-->
+<!--								<a href="single-product.htm" class="product-thumb__link">-->
+<!--									<img src="images/02_catalogue_page_005.jpg" alt="">-->
+<!--									<span class="btn btn-outline-light shop-link">购买</span>-->
+<!--								</a>-->
+<!--							</div>-->
+<!--							<div class="product-title"><a href="single-product.htm">水果刀</a></div>-->
+<!--							<div class="price">-->
+<!--								<span class="amount">¥8.00</span>-->
+<!--							</div>-->
+<!--						</li>-->
+
+<!--						<li class="product">-->
+<!--							<div class="product-thumb">-->
+<!--								<a href="single-product.htm" class="product-thumb__link">-->
+<!--									<img src="images/01_home_page_006.jpg" alt="">-->
+<!--									<span class="btn btn-outline-light shop-link">购买</span>-->
+<!--								</a>-->
+<!--							</div>-->
+<!--							<div class="product-title"><a href="single-product.htm">灰色电脑包</a></div>-->
+<!--							<div class="price">-->
+<!--								<span class="amount">¥33.00</span>-->
+<!--							</div>-->
+<!--						</li>-->
+
+<!--						<li class="product">-->
+<!--							<div class="product-thumb">-->
+<!--								<a href="single-product.htm" class="product-thumb__link">-->
+<!--									<img src="images/02_catalogue_page_007.jpg" alt="">-->
+<!--									<span class="btn btn-outline-light shop-link">购买</span>-->
+<!--								</a>-->
+<!--							</div>-->
+<!--							<div class="product-title"><a href="single-product.htm">吊灯</a></div>-->
+<!--							<div class="price">-->
+<!--								<span class="amount">¥19.00</span>-->
+<!--							</div>-->
+<!--						</li>-->
+
+<!--						<li class="product">-->
+<!--							<div class="product-thumb">-->
+<!--								<a href="single-product.htm" class="product-thumb__link">-->
+<!--									<img src="images/02_catalogue_page_008.jpg" alt="">-->
+<!--									<span class="btn btn-outline-light shop-link">购买</span>-->
+<!--								</a>-->
+<!--							</div>-->
+<!--							<div class="product-title"><a href="single-product.htm">玻璃油瓶</a></div>-->
+<!--							<div class="price">-->
+<!--								<span class="amount">¥27.00</span>-->
+<!--							</div>-->
+<!--						</li>-->
+
+<!--						<li class="product">-->
+<!--							<div class="product-thumb">-->
+<!--								<a href="single-product.htm" class="product-thumb__link">-->
+<!--									<img src="images/01_home_page_005.jpg" alt="">-->
+<!--									<span class="btn btn-outline-light shop-link">购买</span>-->
+<!--								</a>-->
+<!--							</div>-->
+<!--							<div class="product-title"><a href="single-product.htm">木质温暖吊灯</a></div>-->
+<!--							<div class="price">-->
+<!--								<span class="amount">¥56.00</span>-->
+<!--							</div>-->
+<!--						</li>-->
+
+<!--						<li class="product">-->
+<!--							<div class="product-thumb">-->
+<!--								<a href="single-product.htm" class="product-thumb__link">-->
+<!--									<img src="images/02_catalogue_page_010.jpg" alt="">-->
+<!--									<span class="btn btn-outline-light shop-link">购买</span>-->
+<!--								</a>-->
+<!--							</div>-->
+<!--							<div class="product-title"><a href="single-product.htm">绿色钢笔</a></div>-->
+<!--							<div class="price">-->
+<!--								<span class="amount">¥12.00</span>-->
+<!--							</div>-->
+<!--						</li>-->
+
+<!--						<li class="product">-->
+<!--							<div class="product-thumb">-->
+<!--								<span class="onsale">-25%</span>-->
+<!--								<a href="single-product.htm" class="product-thumb__link">-->
+<!--									<img src="images/02_catalogue_page_011.jpg" alt="">-->
+<!--									<span class="btn btn-outline-light shop-link">Shop</span>-->
+<!--								</a>-->
+<!--							</div>-->
+<!--							<div class="product-title"><a href="single-product.htm">陶瓷花瓶</a></div>-->
+<!--							<div class="price">-->
+<!--								<ins><span class="amount">¥45.00</span></ins>-->
+<!--								<del><span class="amount">¥60.00</span></del>-->
+<!--							</div>-->
+<!--						</li>-->
+
+<!--						<li class="product">-->
+<!--							<div class="product-thumb">-->
+<!--								<a href="single-product.htm" class="product-thumb__link">-->
+<!--									<img src="images/02_catalogue_page_012.jpg" alt="">-->
+<!--									<span class="btn btn-outline-light shop-link">购买</span>-->
+<!--								</a>-->
+<!--							</div>-->
+<!--							<div class="product-title"><a href="single-product.htm">iPad透明外壳</a></div>-->
+<!--							<div class="price">-->
+<!--								<span class="amount">¥20.00</span>-->
+<!--							</div>-->
+<!--						</li> &ndash;&gt;-->
+<!--					-->
+					</ul>
+
+<!--					<nav class="shop-pagination text-center">-->
+<!--						<ul class="pagination justify-content-center">-->
+<!--							&lt;!&ndash; <li>-->
+<!--							  <a href="#" aria-label="Previous">-->
+<!--								<span aria-hidden="true"><i class="flaticon-left-arrow-sign"></i> Previous</span>-->
+<!--							  </a>-->
+<!--							</li> &ndash;&gt;-->
+<!--							<li class="active"><a href="#">01</a></li>-->
+<!--							<li><a href="#">02</a></li>-->
+<!--							<li><a href="#">03</a></li>-->
+<!--							<li><a href="#">04</a></li>-->
+<!--							<li><a href="#">05</a></li>-->
+<!--							<li><a href="#">...</a></li>-->
+<!--							<li><a href="#">28</a></li>-->
+<!--							<li>-->
+<!--								<a href="#" aria-label="Next">-->
+<!--									<span aria-hidden="true">下一页 <i class="flaticon-right-direction"></i></span>-->
+<!--								</a>-->
+<!--							</li>-->
+<!--						</ul>-->
+<!--					</nav>-->
+				</div>
+			</main>
+		</div>
+		</div>
+
+	<footer class="page-footer">
+		<div class="container">
+			<div class="foot-info row">
+				<div class="col-md-8">
+					<div class="d-lg-flex align-items-end text-center text-md-left">
+						<a href="/" class="logo-footer">
+							<img src="images/logo-white.png" alt="">
+						</a>
+						<div class="ml-lg-4 page-footer__text">Is a design-focused wordpress theme for unique products</div>
+					</div>
+				</div>
+
+				<div class="social col-md-4">
+					<span>Follow us:</span>
+					<ul class="social-links ml-md-3">
+						<li><a href="#"><i class="mdi mdi-pinterest"></i></a></li>
+						<li><a href="#"><i class="mdi mdi-facebook"></i></a></li>
+						<li><a href="#"><i class="mdi mdi-instagram"></i></a></li>
+						<li><a href="#"><i class="mdi mdi-twitter"></i></a></li>
+					</ul>
+				</div>
+			</div>
+
+			<nav class="footer-navigation">
+				<ul class="nav justify-content-center">
+					<li class="nav-item">
+						<a class="nav-link" href="index.html">Home</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="shop.htm">Shop</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="promo.html">Promo</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="about.html">About</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="blog.html">Blog</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="contact.html">Contact</a>
+					</li>
+				</ul>
+			</nav>
+
+			<div class="footer-bottom">
+				<div class="copyright">Copyright &copy; 2020.Company name All rights reserved.</div>
+				<ul class="footer-bottom__menu">
+					<li><a href="#">Privacy Policy</a></li>
+					<li><a href="#">Terms of use</a></li>
+				</ul>
+			</div>
+		</div>
+	</footer>
+
+	<div id="js-back-to-top" class="back-to-top"><i class="flaticon-up-arrow-sign"></i> Page top</div>
+
+	<div class="full-search-wrap">
+		<div class="full-search container">
+			<div class="close-s float-right js-close-search flaticon-cancel-button fi-2x"></div>
+			<form action="/" class="search-full-form">
+				<div class="position-relative">
+					<i class="search-icon flaticon-magnifying-glass-browser fi-2x"></i>
+					<input type="text" id="s-full" class="search-full-form__input" placeholder="Search">
+					<input type="submit" class="d-none">
+				</div>
+				<p class="hint">Type in your search and press enter</p>
+			</form>
+		</div>
+	</div>
+
+	<!-- Libs -->
+	<script src="libs/jquery-2.2.3.min.js"></script>
+	<script src="libs/bootstrap-4.3.1/js/bootstrap.min.js"></script>
+	<script src="libs/select2/js/select2.min.js"></script>
+	<script src="libs/slick/slick.min.js"></script>
+
+	<!-- Theme -->
+	<script src="assets/js/custom.js"></script>
+</body>
+</html>
