@@ -46,9 +46,8 @@ public class GroupMiaoshaService {
 
     public void createGroup(MiaoshaUser user) {
 
-        groupDao.createGroup(user.getId(),1);
+        groupDao.createGroup(user.getId(),1,10);
         miaoshaUserService.updateGroup(user.getId(),user.getId(),"");
-
 
     }
 

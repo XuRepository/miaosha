@@ -21,7 +21,7 @@ public interface GroupDao {
 //    @Insert("insert into miaosha_user(id,nickname,password,salt,register_date) values(#{id},#{nickname},#{password},#{salt},#{registerDate})")
 
     @Insert("insert into miaosha_group(group_id,head_count,target_count) values(#{leaderId},#{headCount},10)")
-    void createGroup(@Param("leaderId") long leaderId, @Param("headCount") int headCount);
+    void createGroup(@Param("leaderId") long leaderId, @Param("headCount") int headCount,@Param("targeyCount") int targetCount);
 
 
     @Select("select * from miaosha_group where group_id =#{groupId}")
