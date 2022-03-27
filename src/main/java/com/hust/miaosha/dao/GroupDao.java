@@ -32,12 +32,12 @@ public interface GroupDao {
     @Update("update miaosha_group set head_count = #{headCount} where group_id = #{groupId}")
     void updateHeadCount(Group group);
 
-/**
- * sc
- */
-//查询全部分组
-@Select("select * from miaosha_group ")
-List<Group> query();
+    /**
+     * sc
+     */
+    //查询全部分组
+    @Select("select * from miaosha_group ")
+    List<Group> query();
     //   删除特定分组
     @Delete("delete from miaosha_group where group_id =#{groupId}")
     int  delete(@Param("groupId") Long groupId);

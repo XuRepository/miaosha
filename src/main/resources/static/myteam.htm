@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
+
+	<title>Cart</title>
+
+	<!-- Fonts -->
+	<link rel="stylesheet" href="assets/fonts/Lato/Lato.css">
+
+	<!-- Icons -->
+	<link rel="stylesheet" href="assets/fonts/flaticon/flaticon.css">
+	<link rel="stylesheet" href="assets/fonts/webfont/css/materialdesignicons.min.css">
+
+	<!-- Libs -->
+	<link rel="stylesheet" href="libs/bootstrap-4.3.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="libs/select2/css/select2.min.css">
+	<link rel="stylesheet" href="libs/slick/slick.css">
+
+	<!-- Theme -->
+	<link rel="stylesheet" href="assets/css/style.css">
+	<meta name="theme-color" content="#ECECEC">
+
+	<!-- jquery -->
+	<script type="text/javascript" src="/js/jquery.min.js"></script>
+	<!-- bootstrap -->
+	<link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css" />
+	<script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+	<!-- jquery-validator -->
+	<script type="text/javascript" src="/jquery-validation/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="/jquery-validation/localization/messages_zh.min.js"></script>
+	<!-- layer -->
+	<script type="text/javascript" src="/layer/layer.js"></script>
+	<!-- md5.js -->
+	<script type="text/javascript" src="/js/md5.min.js"></script>
+	<!-- common.js -->
+	<script type="text/javascript" src="/js/common.js"></script>
+
+<!--	<script>-->
+<!--		var data=[];-->
+<!--		function reqListener () {-->
+<!--			console.log(this.responseText);-->
+<!--			data=JSON.parse(this.responseText);-->
+<!--			var _ul=document.getElementById("addProduct");-->
+<!--			console.log('data',data)-->
+<!--			for(var i=0;i<data.length;i++)-->
+<!--			{-->
+<!--				var _li=document.createElement("li")-->
+<!--				_li.className="product";-->
+<!--				var _div1=document.createElement("div")-->
+<!--				_div1.className="product-thumb";-->
+<!--				var _a=document.createElement("a");-->
+<!--				_a.className="product-thumb__link";-->
+<!--				// <td><a th:href="'/goods_detail.htm?goodsId='+${goods.id}">详情</a></td>-->
+<!--				var goodsid= data[i].id;-->
+<!--				// _a.href="/goods_detail.htm?goodsId="+goodsid;     //商品详情链接-->
+<!--				_a.href="/single-product.htm?goodsId="+goodsid;     //商品详情链接-->
+<!--				var _img=document.createElement("img");-->
+<!--				_img.src=data[i].goodsImg;           //图片路径-->
+<!--				_a.appendChild(_img);-->
+<!--				_div1.appendChild(_a);-->
+<!--				var _div2=document.createElement("div")-->
+<!--				_div2.className="product-detail";-->
+<!--				_div2.innerHTML=data[i].startDate   //商品秒杀开始时间-->
+<!--				var _div3=document.createElement("div")-->
+<!--				_div3.className="product-detail";-->
+<!--				_div3.innerHTML=data[i].endDate //商品秒杀结束时间-->
+<!--				var _div4=document.createElement("div")-->
+<!--				_div4.className="product-title";-->
+<!--				_div4.innerHTML=data[i].goodsName  //商品名称-->
+<!--				var _div5=document.createElement("div")-->
+<!--				_div5.className="price";-->
+<!--				var _spanIns=document.createElement("span");-->
+<!--				_spanIns.className="amount";-->
+<!--				var _ins=document.createElement("ins");-->
+<!--				_spanIns.innerHTML=data[i].miaoshaPrice    //添加秒杀价格-->
+<!--				_ins.appendChild(_spanIns);-->
+<!--				var _del=document.createElement("del");-->
+<!--				_spanIns.innerHTML=data[i].goodsPrice  //添加商品原价-->
+<!--				//var _spanDel=document.createElement("span");-->
+<!--				_del.appendChild(_spanIns);-->
+<!--				var _span=document.createElement("span");-->
+<!--				_span.innerHTML=data[i].stockCount  //添加商品库存量-->
+<!--				//添加商品价格类标签-->
+<!--				_div5.appendChild(_span);-->
+<!--				_div5.appendChild(_del);-->
+<!--				_div5.appendChild(_ins);-->
+<!--				_li.appendChild(_div5);-->
+<!--				_li.appendChild(_div4);-->
+<!--				_li.appendChild(_div3);-->
+<!--				_li.appendChild(_div2);-->
+<!--				_li.appendChild(_div1);-->
+<!--				_ul.appendChild(_li);-->
+<!--			}-->
+<!--		}-->
+<!--		var oReq = new XMLHttpRequest();-->
+<!--		oReq.addEventListener("load", reqListener);-->
+<!--		oReq.open("GET", "/goods/to_list");-->
+<!--		oReq.send();-->
+
+<!--	</script>-->
+
+	<script>
+
+		function render(team){
+
+			var groupId = team.groupId;
+			var  headCount = team.headCount;
+			var targetCount = team.targetCount;
+			var discount = team.discount;
+
+			// if(user){
+			//     $("#userTip").hide();
+			// }
+			$("#groupId").text(team.groupId);
+			$("#headCount").text(team.headCount);
+			$("#discount").text(team.discount);
+		}
+
+		$(function(){
+			//countDown();
+			getGroup();
+		});
+
+		function getGroup(){
+			// var goodsId = g_getQueryString("groupId");
+			$.ajax({
+				url:"/groupMiaosha/get",
+				type:"GET",
+				success:function(data){
+					if(data.code == 0){
+						render(data.data);
+					}else{
+						layer.msg(data.msg);
+					}
+				},
+				error:function(){
+					layer.msg("客户端请求有误");
+				}
+			});
+		}
+
+	</script>
+
+</head>
+
+
+<body>
+
+
+	<div class="head-line"></div>
+
+	<header class="page-header">
+		<div class="container">
+			<div class="top-bar row align-items-center">
+				<div class="search col-lg-4">
+					<div class="form-search-toggle js-open-search">
+						<i class="search-icon flaticon-magnifying-glass-browser fi-2x"></i>
+						<span>搜索</span>
+					</div>
+					<div id="js-open-mob-menu" class="mob-menu-toggle">
+						<span>Menu</span> <i class="flaticon-menu-options fi-2x"></i>
+					</div>
+				</div>
+
+				<div class="logo col-lg-4">
+					<a href="index.htm"><img src="img/logo3.png" alt=""></a>
+				</div>
+
+				<div class="quick-access-menu col-lg-4">
+
+					<div class="quick-access__item quick-access__item_border-r">
+						<a href="/userCenter.htm">
+							<i class="flaticon-messenger-user-avatar fi-2x"></i>
+							<span class="account">我的订单</span>
+						</a>
+					</div>
+					<div class="quick-access__item">
+						<div class="header-mini-cart">
+							<a href="/order.htm" class="mini-cart-link">
+								<i class="cart__icon flaticon-online-shopping-cart fi-2x"></i>
+								<span class="mini-cart-link__qty">订单</span>
+							</a>
+							<div class="mini-cart">
+								<div class="mini-cart__content">
+									<div class="empty-message">订单没有商品</div>
+									<a href="../templates/shop_old.htm" class="btn btn-primary btn-lg mini-cart__btn">购买更多商品</a>
+								</div>
+								<div class="mini-cart__footer">
+									<div class="icon-box icon-box-left justify-content-center">
+										<div class="icon-box__icon"><i class="flaticon flaticon-delivery-truck"></i></div>
+										<div class="icon-box__title">Delivery to all regions</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div><!-- end of quick-access-menu -->
+			</div> <!-- end of top-bar -->
+
+			<nav class="header-navigation">
+				<button class="mob-menu-close" id="js-close-mob-menu">
+					<span>Close</span>
+					<i class="flaticon-cancel-button"></i>
+				</button>
+
+				<ul class="nav justify-content-center">
+					<li class="nav-item">
+						<a class="nav-link active" href="index.htm">主页</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" href="shop.htm">秒杀</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" href="group_shop.htm">组团秒杀</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="contact.htm">联系我们&nbsp;</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</header>
+
+	<div class="page-wrap cart shop">
+		<!-- Breadcrumbs -->
+		<nav aria-label="breadcrumb" class="page-breadcrumb">
+			<div class="container">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="/">主页</a></li>
+					<li class="breadcrumb-item active" aria-current="page">订单</li>
+				</ol>
+			</div>
+		</nav>
+
+		<div class="page-content">
+			<main class="main-content">
+				<div class="container">
+					<h1 class="page-title h3 text-center">我的队伍</h1>
+
+					<table class="cart-table cart table" id="ordersTable">
+						<thead>
+						<tr>
+							<th class="product-thumbnail">团队id</th>
+							<th class="product-name">团队人数&nbsp;</th>
+<!--							<th class="product-price">满员人数</th>-->
+							<th class="product-quantity"></th>
+							<th class="product-remove">团队当前折扣</th>
+							<th class="product-subtotal">操作</th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr class="cart-item">-->
+							<td class="product-name">
+								<h4><a id="groupId"></a></h4>
+							</td>
+							<td class="product-price" data-title="Price: ">
+								<span class="amount"  id="headCount"></span>
+							</td>
+							<td class="product-price" data-title="Price: ">
+								<span class="amount"  ></span>
+							</td>
+							<td class="product-price" data-title="Price: ">
+								<span class="amount" id="discount" ></span>
+							</td>
+
+							<td>
+								<button class="remove">
+									<i class="flaticon-reading-open-book"></i>
+									<span class="remove__text">处理</span>
+								</button>
+							</td>
+
+
+						</tr>
+
+
+
+
+
+<!--						<tr class="cart-item">-->
+<!--							<td class="product-thumbnail">-->
+<!--								<a href="single-product.htm">-->
+<!--									<img width="170" height="240" src="images/cart1.jpg" alt="" class="attachment-shop_thumbnail"/>-->
+<!--								</a>-->
+<!--							</td>-->
+<!--							<td class="product-name">-->
+<!--								<h4><a href="single-product.htm" id="goodsName">haha </a></h4>-->
+<!--							</td>-->
+<!--							<td class="product-price" data-title="Price: ">-->
+<!--								<span class="amount"  id="goodsPrice">商品价格</span>-->
+<!--							</td>-->
+<!--							<td class="product-quantity" data-title="Quantity: ">-->
+<!--								<div class="quantity">-->
+<!--									<select class="select-style js-select2">-->
+<!--										<option value="usd">1</option>-->
+<!--										<option value="eur">2</option>-->
+<!--										<option value="gbr">3</option>-->
+<!--									</select>-->
+<!--								</div>-->
+<!--							</td>-->
+<!--							<td class="product-remove">-->
+<!--								<button class="remove">-->
+<!--									<i class="flaticon-waste-can"></i>-->
+<!--									<span class="remove__text">删除</span>-->
+<!--								</button>-->
+<!--							</td>-->
+<!--							<td class="product-subtotal" data-title="Total: ">-->
+<!--								<span class="amount">¥56.00</span>-->
+<!--							</td>-->
+<!--						</tr>-->
+<!--						<tr class="cart-item">-->
+<!--							<td class="product-thumbnail">-->
+<!--								<a href="single-product.htm">-->
+<!--									<img width="170" height="240" src="images/cart2.jpg" alt="" class="attachment-shop_thumbnail"/>-->
+<!--								</a>-->
+<!--							</td>-->
+<!--							<td class="product-name">-->
+<!--								<h4><a href="single-product.htm">美度男士手表</a></h4>-->
+<!--							</td>-->
+<!--							<td class="product-price" data-title="Price:">-->
+<!--								<span class="amount">¥6500.00</span>-->
+<!--							</td>-->
+<!--							<td class="product-quantity" data-title="Quantity:">-->
+<!--								<div class="quantity">-->
+<!--									<select class="select-style">-->
+<!--										<option value="usd">1</option>-->
+<!--										<option value="eur">2</option>-->
+<!--										<option value="gbr">3</option>-->
+<!--									</select>-->
+<!--								</div>-->
+<!--							</td>-->
+<!--							<td class="product-remove">-->
+<!--								<button class="remove">-->
+<!--									<i class="flaticon-waste-can"></i>-->
+<!--									<span class="remove__text">删除</span>-->
+<!--								</button>-->
+<!--							</td>-->
+<!--							<td class="product-subtotal" data-title="Total:">-->
+<!--								<span class="amount">¥6500.00</span>-->
+<!--							</td>-->
+<!--						</tr>-->
+						</tbody>
+					</table>
+
+<!--					<div class="row justify-content-between">-->
+<!--						<div class="col-lg-3">-->
+<!--							<h3 class="simple-heading mb-4">订单总额</h3>-->
+
+<!--							<form action="/" class="calc-shipping">-->
+<!--								<div class="form-group">-->
+<!--									<select class="form-control js-select2" data-placeholder="Choose country">-->
+<!--										<option value="">选择 国家</option> &lt;!&ndash; Require for select placeholder &ndash;&gt;-->
+<!--										<option value="Canada">加拿大</option>-->
+<!--										<option value="China">中国</option>-->
+<!--										<option value="Ukraine">英国</option>-->
+<!--										<option value="USA">美国</option>-->
+<!--									</select>-->
+<!--								</div>-->
+<!--								<div class="form-group">-->
+<!--									<select class="form-control js-select2" data-placeholder="Select state">-->
+<!--										<option value="">选择省份</option> &lt;!&ndash; Require for select placeholder &ndash;&gt;-->
+<!--										<option value="Arizona">湖北</option>-->
+<!--										<option value="California">广东</option>-->
+<!--									</select>-->
+<!--								</div>-->
+<!--								<div class="form-group">-->
+<!--									<input type="text" class="form-control" placeholder="Zip / Postal code">-->
+<!--								</div>-->
+<!--								<div class="form-submit">-->
+<!--									<input type="submit" class="btn btn-outline-primary btn-block" name="update_cart" value="Calculate" />-->
+<!--								</div>-->
+<!--							</form>-->
+<!--						</div>-->
+
+<!--						<div class="col-lg-6 cart-total">-->
+<!--							<div class="cart-subtotal d-flex justify-content-between align-items-center">-->
+<!--								<span>总计</span>-->
+<!--								<span>¥6556.00</span>-->
+<!--							</div>-->
+
+<!--							<div class="cart-total__btns text-lg-right">-->
+<!--								<button class="btn btn-outline-primary btn-lg cart-update-btn">更新&nbsp;</button>-->
+<!--								<a href="checkout.html" class="btn btn-primary btn-lg cart-checkout-btn">确认下单</a>-->
+<!--							</div>-->
+<!--						</div>-->
+<!--					</div>-->
+
+				</div>
+			</main>
+		</div>
+	</div>
+
+	<footer class="page-footer">
+		<div class="container">
+			<div class="foot-info row">
+				<div class="col-md-8">
+					<div class="d-lg-flex align-items-end text-center text-md-left">
+						<a href="/" class="logo-footer">
+							<img src="images/logo-white.png" alt="">
+						</a>
+						<div class="ml-lg-4 page-footer__text">Is a design-focused wordpress theme for unique products</div>
+					</div>
+				</div>
+
+				<div class="social col-md-4">
+					<span>Follow us:</span>
+					<ul class="social-links ml-md-3">
+						<li><a href="#"><i class="mdi mdi-pinterest"></i></a></li>
+						<li><a href="#"><i class="mdi mdi-facebook"></i></a></li>
+						<li><a href="#"><i class="mdi mdi-instagram"></i></a></li>
+						<li><a href="#"><i class="mdi mdi-twitter"></i></a></li>
+					</ul>
+				</div>
+			</div>
+
+			<nav class="footer-navigation">
+				<ul class="nav justify-content-center">
+					<li class="nav-item">
+						<a class="nav-link" href="index.htm">Home</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="../templates/shop_old.htm">Shop</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="promo.html">Promo</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="about.html">About</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="blog.html">Blog</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="contact.htm">Contact</a>
+					</li>
+				</ul>
+			</nav>
+
+			<div class="footer-bottom">
+				<div class="copyright">Copyright &copy; 2020.Company name All rights reserved.</div>
+				<ul class="footer-bottom__menu">
+					<li><a href="#">Privacy Policy</a></li>
+					<li><a href="#">Terms of use</a></li>
+				</ul>
+			</div>
+		</div>
+	</footer>
+
+	<div id="js-back-to-top" class="back-to-top"><i class="flaticon-up-arrow-sign"></i> Page top</div>
+
+	<div class="full-search-wrap">
+		<div class="full-search container">
+			<div class="close-s float-right js-close-search flaticon-cancel-button fi-2x"></div>
+			<form action="/" class=" search-full-form">
+				<div class="position-relative">
+					<i class="search-icon flaticon-magnifying-glass-browser fi-2x"></i>
+					<input type="text" id="s-full" class="search-full-form__input" placeholder="Search">
+					<input type="submit" class="d-none">
+				</div>
+				<p class="hint">Type in your search and press enter</p>
+			</form>
+		</div>
+	</div>
+	<!-- Libs -->
+	<script src="libs/jquery-2.2.3.min.js"></script>
+	<script src="libs/bootstrap-4.3.1/js/bootstrap.min.js"></script>
+	<script src="libs/select2/js/select2.min.js"></script>
+	<script src="libs/slick/slick.min.js"></script>
+
+	<!-- Theme -->
+	<script src="assets/js/custom.js"></script>
+</body>
+</html>

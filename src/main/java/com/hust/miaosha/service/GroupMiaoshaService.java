@@ -163,4 +163,8 @@ public class GroupMiaoshaService {
         //order_info maiosha_order
         return createOrder(user, goods);
     }
+
+    public List<Group> queryGroup() {
+        return groupDao.query();
+    }
 }

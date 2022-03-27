@@ -56,6 +56,27 @@ public class GroupMiaoshaController {
      * 创建团队
      * @return
      */
+    @RequestMapping("/groupGround")
+    @ResponseBody
+    public Result<List<Group>> groupGround(MiaoshaUser user){
+
+        if (user == null) {
+            return Result.error(CodeMsg.SESSION_ERROR);
+        }
+
+        List<Group> list =groupMiaoshaService.queryGroup();
+
+        if (list.size()==0){
+            return Result.error(CodeMsg.NO_GROUP);
+        }
+        return Result.success(list);
+    }
+
+
+    /**
+     * 创建团队
+     * @return
+     */
     @RequestMapping("/createGroup")
     @ResponseBody
     @ApiOperation(value="创建团队", notes="创建团队")

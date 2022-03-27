@@ -40,7 +40,13 @@
 	<script type="text/javascript" src="/js/common.js"></script>
 
 	<script>
-		var data=[];
+		function toGround() {
+
+			window.location.href="/group_ground.htm";
+
+		}
+
+	var data=[];
 		function reqListener () {
 			console.log(this.responseText);
 			data=JSON.parse(this.responseText);
@@ -143,7 +149,7 @@
 		}
 
 		function toTeam() {
-			window.location.href="/team.htm";
+			window.location.href="/myteam.htm";
 		}
 
 	</script>
@@ -284,6 +290,7 @@
 <!--			<div style="display:inline-block;">-->
 				<button class="btn btn-primary " type="button" onclick="toTeam()" style="width: 200px">查看我的队伍</button>
 				<button class="btn btn-primary " type="button" onclick="createGroup()" style="width: 200px">创建队伍</button>
+				<button class="btn btn-primary " type="button" onclick="toGround()" style="width: 200px">队伍广场</button>
 
 					<input type="text" id="groupidInput"  placeholder="队伍id" required style="width: 200px">
 					<button type="submit" class="btn btn-primary" onclick="joinGroup()" >加入队伍</button>
@@ -296,6 +303,7 @@
 <!--			<form class="subscribe-form form-inline justify-content-center">-->
 <!--				<input type="text" class="form-control form-control-lg subscribe-form__input" id="groupId" placeholder="队伍id">-->
 <!--				<button type="submit" class="btn btn-primary btn-lg subscribe-form__btn" onclick="joinGroup()">加入队伍</button>-->
+<!--			</form>-->
 <!--			</form>-->
 
 		</div>
