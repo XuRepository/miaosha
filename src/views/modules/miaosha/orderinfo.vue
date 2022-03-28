@@ -26,7 +26,7 @@
         prop="id"
         header-align="center"
         align="center"
-        label="">
+        label="订单ID">
       </el-table-column>
       <el-table-column
         prop="userId"
@@ -40,23 +40,23 @@
         align="center"
         label="商品ID">
       </el-table-column>
-      <el-table-column
+      <!-- <el-table-column
         prop="deliveryAddrId"
         header-align="center"
         align="center"
         label="收货地址ID">
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column
         prop="goodsImg"
         header-align="center"
         align="center"
-        label="">
+        label="商品图片">
       </el-table-column>
       <el-table-column
         prop="goodsName"
         header-align="center"
         align="center"
-        label="冗余过来的商品名称">
+        label="商品名称">
       </el-table-column>
       <el-table-column
         prop="goodsCount"
@@ -70,35 +70,35 @@
         align="center"
         label="商品单价">
       </el-table-column>
-      <el-table-column
+      <!-- <el-table-column
         prop="orderChannel"
         header-align="center"
         align="center"
         label="1pc, 2android, 3ios">
-      </el-table-column>
-      <el-table-column
+      </el-table-column> -->
+      <!-- <el-table-column
         prop="status"
         header-align="center"
         align="center"
         label="订单状态, 0新建未支付, 1已支付, 2已发货, 3已收货, 4已退款, 5已完成">
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column
         prop="createDate"
         header-align="center"
         align="center"
-        label="订单的创建时间">
+        label="下单时间">
       </el-table-column>
-      <el-table-column
+      <!-- <el-table-column
         prop="payDate"
         header-align="center"
         align="center"
-        label="支付时间">
-      </el-table-column>
+        label="订单支付">
+      </el-table-column> -->
       <el-table-column
         prop="address"
         header-align="center"
         align="center"
-        label="">
+        label="收获地址">
       </el-table-column>
       <el-table-column
         fixed="right"

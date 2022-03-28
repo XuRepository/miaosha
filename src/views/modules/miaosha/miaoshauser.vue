@@ -26,25 +26,25 @@
         prop="id"
         header-align="center"
         align="center"
-        label="用户ID,手机号码">
+        label="用户ID">
       </el-table-column>
       <el-table-column
         prop="nickname"
         header-align="center"
         align="center"
-        label="">
+        label="用户名称">
       </el-table-column>
       <el-table-column
         prop="password"
         header-align="center"
         align="center"
-        label="MD5(MD5(pass明文+固定salt) + salt)">
+        label="密码">
       </el-table-column>
-      <el-table-column
+      <!-- <el-table-column
         prop="salt"
         header-align="center"
         align="center"
-        label="">
+        label="盐">
       </el-table-column>
       <el-table-column
         prop="head"
@@ -69,18 +69,18 @@
         header-align="center"
         align="center"
         label="登录次数">
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column
         prop="address"
         header-align="center"
         align="center"
-        label="">
+        label="收获地址">
       </el-table-column>
       <el-table-column
         prop="groupId"
         header-align="center"
         align="center"
-        label="">
+        label="团购团队ID">
       </el-table-column>
       <el-table-column
         fixed="right"

@@ -44,13 +44,13 @@
         prop="goodsImg"
         header-align="center"
         align="center"
-        label="商品的图片">
+        label="商品图片">
       </el-table-column>
       <el-table-column
         prop="goodsDetail"
         header-align="center"
         align="center"
-        label="商品的详情介绍">
+        label="商品详情">
       </el-table-column>
       <el-table-column
         prop="goodsPrice"
@@ -62,7 +62,7 @@
         prop="goodsStock"
         header-align="center"
         align="center"
-        label="商品库存, -1表示没有限制">
+        label="商品库存">
       </el-table-column>
       <el-table-column
         fixed="right"

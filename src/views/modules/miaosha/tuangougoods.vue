@@ -26,19 +26,19 @@
         prop="id"
         header-align="center"
         align="center"
-        label="秒杀的商品表">
+        label="团购秒杀ID">
       </el-table-column>
       <el-table-column
         prop="goodsId"
         header-align="center"
         align="center"
-        label="商品id">
+        label="商品ID">
       </el-table-column>
       <el-table-column
         prop="miaoshaPrice"
         header-align="center"
         align="center"
-        label="秒杀价">
+        label="秒杀价格">
       </el-table-column>
       <el-table-column
         prop="stockCount"

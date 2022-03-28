@@ -26,7 +26,7 @@
         prop="id"
         header-align="center"
         align="center"
-        label="">
+        label="团购订单ID">
       </el-table-column>
       <el-table-column
         prop="userId"

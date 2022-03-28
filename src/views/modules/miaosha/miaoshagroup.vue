@@ -26,19 +26,19 @@
         prop="groupId"
         header-align="center"
         align="center"
-        label="">
+        label="团队ID">
       </el-table-column>
       <el-table-column
         prop="headCount"
         header-align="center"
         align="center"
-        label="">
+        label="团队人数">
       </el-table-column>
       <el-table-column
         prop="targetCount"
         header-align="center"
         align="center"
-        label="">
+        label="团队折扣">
       </el-table-column>
       <el-table-column
         fixed="right"
