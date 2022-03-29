@@ -121,6 +121,18 @@
 			}
 			});
 			}
+
+		function toOrderDetail(id,channel) {
+			console.log(id,channel);
+			if (channel===2){
+				window.location.href="/orderDetail_group.htm?orderId="+id;
+			}
+			else{
+				window.location.href="/orderDetail3.htm?orderId="+id;
+			}
+
+		}
+
 		function showData(data) {
 			var str = "";
 			for (let i = 0; i < data.length; i++) {
@@ -131,7 +143,7 @@
 \t\t\t\t\t\t</a>
 \t\t\t\t\t\t</td>
 \t\t\t\t\t\t<td class="product-name">
-\t\t\t\t\t\t<h4><a href="single-product.htm?goodsId=${data.goodsId}" >`+data[i].goodsName+`</a></h4>
+\t\t\t\t\t\t<h4><a href="single-product.htm?goodsId=${data[i].goodsId}" >`+data[i].goodsName+`</a></h4>
 \t\t\t\t</td>
 \t\t\t\t<td class="product-price" data-title="Price: ">
 \t\t\t\t\t\t<span class="amount" >`+data[i].goodsPrice+`</span>
@@ -140,7 +152,7 @@
 \t\t\t\t\t\t<span class="amount" >`+data[i].goodsCount+`</span>
 \t\t\t\t\t\t</td>
 \t\t\t\t\t\t<td class="product-remove">
-\t\t\t\t\t\t<button class="remove">
+\t\t\t\t\t\t<button class="remove" onclick="toOrderDetail(${data[i].id},${data[i].orderChannel})">
 \t\t\t\t\t\t<i class="flaticon-reading-open-book"></i>
 \t\t\t\t\t\t<span class="remove__text">详情</span>
 \t\t\t\t\t\t</button>

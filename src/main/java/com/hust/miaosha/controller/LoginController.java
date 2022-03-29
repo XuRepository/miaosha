@@ -52,12 +52,12 @@ public class LoginController {
 
 	@RequestMapping(value = "/register",method = RequestMethod.POST)
 	@ResponseBody
-	public Result<String> register(UserVo userVo){
+	public Result<String> register(@Valid UserVo userVo){
 
 
 		int res = miaoshaUserService.insert(userVo);
 		if (res == 1) return Result.success("插入成功");
-		else return Result.error(CodeMsg.SERVER_ERROR);
+		else return Result.error(CodeMsg.MOBILE_ERROR);
 	}
 
 	@RequestMapping("/to_shop")
