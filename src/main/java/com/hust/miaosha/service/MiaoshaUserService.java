@@ -180,13 +180,15 @@ public class MiaoshaUserService {
         MiaoshaUser miaoshaUser = new MiaoshaUser();
         miaoshaUser.setId(userVo.getId());
         miaoshaUser.setNickname(userVo.getNickname());
-        miaoshaUser.setPassword(MD5Util.inputPassToDbPass(userVo.getPassword(),"1a2b3c4d"));
+        miaoshaUser.setAddress(userVo.getAddress());
+        System.out.println(miaoshaUser.toString());
+//        miaoshaUser.setPassword(MD5Util.inputPassToDbPass(userVo.getPassword(),"1a2b3c4d"));
 
-        miaoshaUser.setSalt("1a2b3c4d");
-        miaoshaUser.setLoginCount(0);
-        miaoshaUser.setLastLoginDate(new Date());
-        miaoshaUser.setRegisterDate(new Date());
-        return miaoshaUserDao.update(miaoshaUser);
+//        miaoshaUser.setSalt("1a2b3c4d");
+//        miaoshaUser.setLoginCount(0);
+//        miaoshaUser.setLastLoginDate(new Date());
+//        miaoshaUser.setRegisterDate(new Date());
+        return miaoshaUserDao.updateInfo(miaoshaUser);
 
     }
 }

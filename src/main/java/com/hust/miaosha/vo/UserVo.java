@@ -14,16 +14,32 @@ import java.util.Date;
  **/
 public class UserVo {
     @NotNull
-    @IsMobile//自定义的validation
+//    @IsMobile//自定义的validation
+//    @Length(min=11,max=11)
     private Long id;
+
+//    @NotNull
+//    @IsMobile
+//    private String mobile;
 
     private String nickname;
 
     @NotNull
-    @Length(min = 32)
+    @Length(min = 6)
     private String password;
+
     private String salt;
     private Date registerDate;
+
+    private String address;
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
     public Long getId() {
         return id;
@@ -65,4 +81,15 @@ public class UserVo {
         this.registerDate = registerDate;
     }
 
+    @Override
+    public String toString() {
+        return "UserVo{" +
+                "id=" + id +
+                ", nickname='" + nickname + '\'' +
+                ", password='" + password + '\'' +
+                ", salt='" + salt + '\'' +
+                ", registerDate=" + registerDate +
+                ", address='" + address + '\'' +
+                '}';
+    }
 }

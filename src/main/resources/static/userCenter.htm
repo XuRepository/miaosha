@@ -41,6 +41,8 @@
 
 	<script>
 		var flag=1;  //默认按钮是修改用户信息
+		var flag1=1;  //默认按钮是修改用户信息
+		var id;
 
 
 		window.onload(requestData());
@@ -71,6 +73,7 @@
 			$("#nickName").text(detail.nickname);
 			$("#mobile").text(detail.id);
 			$("#address").text(detail.address);
+			id = detail.id;
 			// $("#goodsImg").attr("src", goods.goodsImg);
 			// $("#orderPrice").text(order.goodsPrice);
 			// $("#createDate").text(new Date(order.createDate).format("yyyy-MM-dd hh:mm:ss"));
@@ -85,25 +88,54 @@
 		}
 		function editUser(){
 			var e=document.getElementById("edit");
+			var a = document.getElementById("address");
+			var u =document.getElementById("nickName");
+			var m = document.getElementById("mobile");
+
 			if(flag===1) {
-				var u = document.getElementById("nickName");
 				var initialValue = u.innerHTML;
-				u.innerHTML = `<input value=${initialValue}></input>`;
-
-				var m = document.getElementById("mobile");
-				var initialValue = m.innerHTML;
-				m.innerHTML = `<input value=${initialValue}></input>`;
-
-				var a = document.getElementById("address");
+				u.innerHTML = `<input value=${initialValue} id="nickname"></input>`;
 				var initialValue = a.innerHTML;
-				a.innerHTML = `<input value=${initialValue}></input>`;
+				a.innerHTML = `<input value=${initialValue} id="address1"></input>`;
 				e.innerHTML="保存";
 				flag=0;
 			}
 			else{
-				//ajax调用接口data
+				console.log('a',(m.innerHTML),a,$("#address1").val(),$("#nickname").val())
+				$.ajax({
+					url: "/user/updateInfo",
+					type: "post",
+					data:{
+						id:id,
+						address:$("#address1").val(),
+						nickname:$("#nickname").val(),
+					},
+					// dataType: "json",
+					success:function(data){
+						if(data.code == 0){
+
+							/*console.log(data,$("#address1").val());
+							// render(data.data);
+							a.innerHTML=$("#address1").val();
+							u.innerHTML=$("#nickname").val();*/
+							flag=1;
+							location.reload();
+						}else{
+							layer.msg(data.msg);
+						}
+					},
+					error: function(msg){
+						alert("ajax连接异常："+msg);
+					}
+				});
 				render(data.data);
 			}
+		}
+
+		function editPassword(){
+
+			window.location.href="/password.htm";
+
 		}
 
 	</script>
@@ -135,7 +167,7 @@
 				<div class="container">
 					<h1 class="page-title h3 text-center">个人中心</h1>
 					<button type="button" class="btn btn-primary mr-1 mb-3" onclick="editUser()" id="edit">修改个人信息</button>
-					<button type="button" class="btn btn-primary mr-1 mb-3" onclick="">修改密码</button>
+					<button type="button" class="btn btn-primary mr-1 mb-3" onclick="editPassword()" id="password">修改密码</button>
 
 					<table  id="ordersTable">
 <!--						<thead>-->

@@ -18,6 +18,10 @@ public interface MiaoshaUserDao {
     @Update("update miaosha_user set password = #{password} where id = #{id}")
     int update(MiaoshaUser user);
 
+//    set (id =#{id},goods_name=#{goods_name},goods_title=#{goods_title},goods_img=#{goods_img},goods_detail=#{goods_detail},goods_price=#{goods_price},goods_stock=#{goods_stock} where goods_id = #{goodsId}
+    @Update("update miaosha_user set nickname = #{nickname},address = #{address} where id = #{id}")
+    int updateInfo(MiaoshaUser user);
+
     @Update("update miaosha_user set group_id = #{groupId} where id = #{id}")
     int updateGroup(MiaoshaUser user);
 

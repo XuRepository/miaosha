@@ -8,6 +8,7 @@ import com.hust.miaosha.result.Result;
 import com.hust.miaosha.service.MiaoshaService;
 import com.hust.miaosha.service.MiaoshaUserService;
 import com.hust.miaosha.service.OrderService;
+import com.hust.miaosha.util.MD5Util;
 import com.hust.miaosha.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -93,29 +94,36 @@ public class UserController {
     }
 
     /**
-     * 时序图用：修改个人信息
+     * 修改个人信息
      * @param model
-     * @param id
+     * @param
      * @return
      */
     @RequestMapping("/updateInfo")
     @ResponseBody
-    public Result<String> updateUserInfo(Model model, UserVo userVo) {
+    public Result<String> updateUserInfo(Model model, UserVo userVo,MiaoshaUser user) {
+        model.addAttribute("user",user);
         int update = userService.update(userVo);
         return Result.success("更新成功");
     }
 
 
     /**
-     * 时序图用：修改密码
+     * 修改密码
      * @param model
      * @param
      * @return
      */
     @RequestMapping("/updatePassword")
     @ResponseBody
-    public Result<String> updatePassword(Model model, UserVo userVo) {
-        boolean update = userService.updatePassword("",1L,"qqqqqqq");
+    public Result<String> updatePassword(Model model, UserVo userVo,MiaoshaUser user) {
+
+        String password = userVo.getPassword();
+        System.out.println(userVo.toString());
+        String dbPassword = MD5Util.inputPassToFormPass(password);
+
+
+        boolean update = userService.updatePassword("",user.getId(),dbPassword);
         return Result.success("更新成功");
     }
 
