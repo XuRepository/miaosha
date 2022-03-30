@@ -4,7 +4,7 @@
 <head>
     <title>注册</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <!-- jquery -->
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <!-- bootstrap -->
@@ -28,34 +28,47 @@
 
 <body>
 
-<form class="form-signin" id="loginForm">
-    <div class="text-center mb-4">
-        <img class="mb-4" src="img/logo.png" alt="" width="128" height="128">
-        <h1 class="h3 mb-3 font-weight-normal">欢迎注册华中大秒杀系统</h1>
+
+
+<div class="site-wrapper site-page--login">
+    <div class="site-content__wrapper">
+        <div class="site-content">
+            <div class="brand-info">
+                <h2 class="brand-info__text">华 中 大 秒 杀 系 统</h2>
+                <p class="brand-info__intro">
+                    华中科技大学70周年校庆周边秒杀系统
+                </p>
+            </div>
+            <div class="login-main">
+                <form class="form-signin" id="loginForm">
+                    <div class="text-center mb-4">
+                        <img class="mb-4" src="img/logo.png" alt="" width="128" height="128">
+                        <h1 class="h3 mb-3 font-weight-normal">欢迎注册华中大秒杀系统</h1>
+                    </div>
+
+                    <div class="form-label-group">
+                        <input type="text" id="nicknameInput" class="form-control" placeholder="用户名" required
+                               autofocus autocomplete="new-password">
+                        <label for="nicknameInput">用户名</label>
+                    </div>
+
+                    <div class="form-label-group">
+                        <input type="password" id="passwordInput" class="form-control" placeholder="密码" required
+                               autocomplete="new-password">
+                        <label for="passwordInput">密码</label>
+                    </div>
+
+                    <div class="form-label-group">
+                        <input type="text" id="idInput" class="form-control" placeholder="手机号" required
+                               autocomplete="new-password">
+                        <label for="idInput">手机号</label>
+                    </div>
+                    <a class="btn btn-lg btn-primary btn-block" onclick="login()">注册</a>
+                </form>
+            </div>
+        </div>
     </div>
-
-
-
-    <div class="form-label-group">
-        <input type="text" id="nicknameInput"  class="form-control" placeholder="用户名" required autofocus autocomplete="new-password">
-        <label for="nicknameInput">用户名</label>
-    </div>
-
-    <div class="form-label-group">
-        <input type="password" id="passwordInput" class="form-control" placeholder="密码" required autocomplete="new-password">
-        <label for="passwordInput">密码</label>
-    </div>
-
-    <div class="form-label-group">
-        <input type="text" id="idInput" class="form-control" placeholder="手机号" required autocomplete="new-password">
-        <label for="idInput">手机号</label>
-    </div>
-
-<!--    <div id="warnInfo" class="alert alert-danger" role="alert"></div>-->
-
-    <a class="btn btn-lg btn-primary btn-block" onclick="login()">注册</a>
-</form>
-
+</div>
 
 <!--<div class="panel panel-default" >-->
 
@@ -85,12 +98,12 @@
                 id: id,
             },
             success: function (data) {
-                if (data.code===0){
+                if (data.code === 0) {
                     alert("注册成功");
                     // alert(data.status);
                     history.back();
                     // window.location.href="http://localhost:8080/login/to_login";
-                }else{
+                } else {
                     alert(data.msg);
                 }
 
@@ -102,4 +115,80 @@
     }
 
 </script>
+
+<style>
+    .site-page--login {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: rgba(38, 50, 56, 0.4);
+        overflow: hidden;
+    }
+
+    :before {
+        position: fixed;
+        top: 0;
+        left: -250px;
+        z-index: -1;
+        width: 100%;
+        height: 100%;
+        content: "";
+        background-image: url('/img/ba5.jpg');
+        background-size: cover;
+    }
+
+    .site-content__wrapper {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        padding: 0;
+        margin: 0;
+        overflow-x: hidden;
+        overflow-y: auto;
+        background-color: transparent;
+    }
+
+    .site-content {
+        min-height: 100%;
+        padding: 30px 500px 30px 30px;
+    }
+
+    .brand-info {
+        margin: 220px 100px 0 90px;
+        color: #fff;
+    }
+
+    .brand-info__text {
+        margin: 0 0 22px 0;
+        font-size: 48px;
+        font-weight: 400;
+        text-transform: uppercase;
+    }
+
+    .brand-info__intro {
+        margin: 10px 0;
+        font-size: 16px;
+        line-height: 1.58;
+        /*opacity: 0.6;*/
+    }
+
+    .login-main {
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 150px 60px 180px;
+        width: 470px;
+        min-height: 100%;
+        background-color: #fff;
+    }
+
+    .login-title {
+        font-size: 16px;
+    }
+</style>
+
 </html>
