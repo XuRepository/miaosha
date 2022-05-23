@@ -11,6 +11,7 @@ public class DBUtil {
 	
 	static {
 		try {
+			int i=0;
 			InputStream in = DBUtil.class.getClassLoader().getResourceAsStream("application.properties");
 			props = new Properties();
 			props.load(in);
